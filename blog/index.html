@@ -174,12 +174,13 @@
     <!-- JavaScript -->
     <script src="../js/firebase-config.js"></script>
     <script src="../js/adsense-config.js"></script>
-    <script src="../js/api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             try {
-                // Load blogs from API
-                const blogs = await api.getBlogs();
+                // Load blogs directly from JSON file (works on GitHub Pages)
+                const response = await fetch('../blogs-data.json');
+                if (!response.ok) throw new Error('Failed to load blogs');
+                const blogs = await response.json();
 
                 // Separate featured and latest posts
                 const featuredBlogs = blogs.filter(blog => blog.featured && blog.status === 'published');

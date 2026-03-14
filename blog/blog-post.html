@@ -238,7 +238,6 @@
     <!-- JavaScript -->
     <script src="../js/firebase-config.js"></script>
     <script src="../js/adsense-config.js"></script>
-    <script src="../js/api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
@@ -251,7 +250,17 @@
             }
 
             try {
-                const blog = await api.getBlog(blogId);
+                // Load blogs directly from JSON file (works on GitHub Pages)
+                const response = await fetch('../blogs-data.json');
+                if (!response.ok) throw new Error('Failed to load blogs');
+                const blogs = await response.json();
+
+                // Find the blog with the matching ID
+                const blog = blogs.find(b => b.id == blogId);
+                if (!blog) {
+                    throw new Error('Blog not found');
+                }
+
                 renderBlogPost(blog);
             } catch (error) {
                 console.error('Failed to load blog:', error);
