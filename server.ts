@@ -171,7 +171,13 @@ async function startServer() {
       return res.status(401).json({ error: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user.id, email: user.email, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: '1d' });
-    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' });
+    const isProduction = process.env.NODE_ENV === "production";
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
     res.json({ id: user.id, email: user.email, role: user.role, name: user.name });
   });
 
@@ -320,14 +326,16 @@ async function startServer() {
     res.status(404).json({ error: "API route not found" });
   });
 
-  // Vite middleware for development
+  // Serve static files and index.html for all non-API routes
   if (process.env.NODE_ENV !== "production") {
+    // Development mode: Use Vite with middleware mode
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
   } else {
+    // Production mode: Serve pre-built files
     app.use(express.static(path.join(__dirname, "dist")));
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "dist", "index.html"));
