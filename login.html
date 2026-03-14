@@ -112,6 +112,35 @@
             margin-bottom: 1rem;
             font-size: 0.875rem;
         }
+        .info-message {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: #1e40af;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        .info-message h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1.125rem;
+            color: #1e40af;
+        }
+        .info-message ul {
+            margin: 0.75rem 0;
+            padding-left: 1.25rem;
+        }
+        .info-message li {
+            margin-bottom: 0.5rem;
+        }
+        .info-message a {
+            color: #1e40af;
+            font-weight: 600;
+        }
+        .info-message a:hover {
+            text-decoration: underline;
+        }
         .hidden {
             display: none !important;
         }
@@ -133,6 +162,42 @@
 <body>
     <div class="auth-container">
         <h1 class="auth-title">Login to Government Job Hai</h1>
+
+        <!-- Backend Not Available Message -->
+        <div id="backendUnavailable" class="info-message">
+            <h3>⚠️ Login Not Available on GitHub Pages</h3>
+            <p><strong>You're currently viewing the static version of our website on GitHub Pages.</strong></p>
+            <p><strong>What works on GitHub Pages:</strong></p>
+            <ul>
+                <li>✅ Browse all government jobs</li>
+                <li>✅ View admit cards & results</li>
+                <li>✅ Read blog articles</li>
+                <li>✅ Search and filter jobs</li>
+            </ul>
+            <p><strong>What requires PHP backend:</strong></p>
+            <ul>
+                <li>❌ Login / Register</li>
+                <li>❌ Admin panel</li>
+                <li>❌ Save jobs to profile</li>
+                <li>❌ Track applications</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>🚀 Want Full Features?</strong></p>
+            <p>Choose an option below:</p>
+            <ol style="margin-top: 0.75rem;">
+                <li><a href="index.html">🏠 Go Back to Home</a> - Browse jobs without login</li>
+                <li><a href="README-DEPLOYMENT.md" target="_blank">📖 Read Deployment Guide</a> - Learn how to deploy with full features</li>
+                <li><strong>Run locally:</strong> Follow these steps:
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Download the project</li>
+                        <li>Run: <code>cd backend && composer install</code></li>
+                        <li>Run: <code>php artisan migrate && php artisan db:seed</code></li>
+                        <li>Run: <code>php artisan serve</code></li>
+                        <li>Open: <code>http://localhost:8000</code></li>
+                        <li>Login with: <code>admin@sarkari.com</code> / <code>admin123</code></li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
 
         <div id="errorMessage" class="error-message hidden"></div>
 
@@ -193,6 +258,21 @@
             const submitButton = document.getElementById('submitButton');
             const buttonText = document.getElementById('buttonText');
             const errorMessage = document.getElementById('errorMessage');
+            const backendUnavailable = document.getElementById('backendUnavailable');
+
+            // Check if running on GitHub Pages (static hosting)
+            if (window.location.hostname.includes('github.io')) {
+                // Show backend unavailable message
+                backendUnavailable.classList.remove('hidden');
+                // Hide login form
+                form.style.display = 'none';
+                // Hide auth links
+                document.querySelector('.auth-links').style.display = 'none';
+                return;
+            } else {
+                // Hide backend message if not on GitHub Pages
+                backendUnavailable.classList.add('hidden');
+            }
 
             // Check if user is already logged in
             if (auth.isAuthenticated) {
