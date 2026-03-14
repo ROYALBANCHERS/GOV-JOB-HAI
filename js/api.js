@@ -122,11 +122,37 @@ class API {
 
     // ===== Job Methods =====
     async getJobs(params = {}) {
-        return this.get('/jobs', params);
+        try {
+            return await this.get('/jobs', params);
+        } catch (error) {
+            console.log('Backend unavailable, loading static data...');
+            return this.loadStaticJobs();
+        }
     }
 
     async getJob(id) {
-        return this.get(`/jobs/${id}`);
+        try {
+            return await this.get(`/jobs/${id}`);
+        } catch (error) {
+            console.log('Backend unavailable, loading job from static data...');
+            const jobs = await this.loadStaticJobs();
+            const job = jobs.find(j => j.id == id);
+            if (!job) throw new Error('Job not found');
+            return job;
+        }
+    }
+
+    // Load static job data for GitHub Pages
+    async loadStaticJobs() {
+        try {
+            const response = await fetch('jobs-data.json');
+            if (!response.ok) throw new Error('Failed to load static data');
+            const jobs = await response.json();
+            return jobs;
+        } catch (error) {
+            console.error('Failed to load static jobs:', error);
+            throw new Error('Unable to load jobs. Please check your internet connection.');
+        }
     }
 
     async saveJob(id) {
