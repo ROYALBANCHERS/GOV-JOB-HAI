@@ -747,3 +747,54 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== Ad Spaces ===== */
+.ad-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    min-height: 90px;
+}
+
+#ad-header {
+    max-width: 728px;
+    margin: 1rem auto;
+}
+
+#ad-sidebar {
+    width: 300px;
+    height: 250px;
+    margin: 1rem auto;
+}
+
+#ad-content {
+    width: 100%;
+    margin: 2rem 0;
+}
+
+#ad-footer {
+    max-width: 728px;
+    margin: 2rem auto;
+}
+
+#ad-job-detail {
+    width: 300px;
+    height: 250px;
+    margin: 1rem auto;
+}
+
+/* Responsive ads */
+@media (max-width: 768px) {
+    #ad-header,
+    #ad-footer {
+        max-width: 100%;
+    }
+
+    #ad-sidebar,
+    #ad-job-detail {
+        width: 100%;
+        max-width: 300px;
+    }
+}

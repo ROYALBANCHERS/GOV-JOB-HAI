@@ -13,6 +13,13 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -27,6 +34,7 @@
                 <a href="category/latest_job.html" class="nav-link">Latest Jobs</a>
                 <a href="category/admit_card.html" class="nav-link">Admit Cards</a>
                 <a href="category/result.html" class="nav-link">Results</a>
+                <a href="blog/" class="nav-link">Blog</a>
                 <div class="nav-divider"></div>
                 <a href="login.html" class="nav-link" id="loginLink">Login</a>
                 <a href="profile.html" class="nav-link hidden" id="profileLink">Profile</a>
@@ -39,6 +47,11 @@
             </button>
         </div>
     </nav>
+
+    <!-- Ad Space - Header -->
+    <div class="container" style="padding: 1rem 0;">
+        <div id="ad-header" class="ad-container"></div>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -259,6 +272,8 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/adsense-config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Government Job Hai</title>
+    <meta name="description" content="Read latest articles about government jobs, exam tips, career guidance, and preparation strategies on Government Job Hai blog.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        .blog-header {
+            background: linear-gradient(135deg, #004a99 0%, #0066cc 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .blog-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .blog-header p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        .blog-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--bg-secondary);
+        }
+        .blog-content {
+            padding: 1.5rem;
+        }
+        .blog-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .blog-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .blog-read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .featured-posts {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Government Job Hai</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../category/latest_job.html" class="nav-link">Latest Jobs</a>
+                <a href="../index.html" class="nav-link active">Blog</a>
+                <a href="../contact.html" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="blog-header">
+        <div class="container">
+            <h1>Government Job Hai Blog</h1>
+            <p>Exam Tips, Career Guidance, and Latest Updates</p>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Featured Posts -->
+            <div class="featured-posts">
+                <h2 class="section-title">Featured Articles</h2>
+                <div class="blog-grid">
+                    <article class="blog-card" onclick="window.location.href='how-to-prepare-for-ssc-cgl.html'">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop" alt="SSC CGL Preparation" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Exam Tips</span>
+                            <h3 class="blog-title">Complete Guide: How to Prepare for SSC CGL 2024</h3>
+                            <p class="blog-excerpt">Get expert tips and strategies to crack SSC CGL exam in first attempt. Detailed study plan, important topics, and time management tips.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 10, 2024</span>
+                                <span class="blog-read-time">⏱️ 8 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='government-jobs-after-12th.html'">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop" alt="Government Jobs After 12th" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Career Guidance</span>
+                            <h3 class="blog-title">Top 10 Government Jobs You Can Apply After 12th</h3>
+                            <p class="blog-excerpt">Explore various government job opportunities available for 12th pass candidates. Complete eligibility and application details.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 8, 2024</span>
+                                <span class="blog-read-time">⏱️ 6 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='railway-exam-preparation.html'">
+                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&h=400&fit=crop" alt="Railway Exam Preparation" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Exam Tips</span>
+                            <h3 class="blog-title">Railway Group D Exam: Preparation Strategy & Important Topics</h3>
+                            <p class="blog-excerpt">Complete preparation guide for Railway Group D exam. Subject-wise tips, previous year papers analysis, and expected cutoff.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 5, 2024</span>
+                                <span class="blog-read-time">⏱️ 7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Latest Articles -->
+            <div>
+                <h2 class="section-title">Latest Articles</h2>
+                <div class="blog-grid">
+                    <article class="blog-card" onclick="window.location.href='banking-exam-tips.html'">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop" alt="Banking Exam Tips" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Banking</span>
+                            <h3 class="blog-title">IBPS PO vs SBI PO: Which Exam Should You Choose?</h3>
+                            <p class="blog-excerpt">Compare IBPS PO and SBI PO exams - difficulty level, salary, career growth, and preparation strategy.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 12, 2024</span>
+                                <span class="blog-read-time">⏱️ 5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='interview-tips.html'">
+                        <img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=600&h=400&fit=crop" alt="Interview Tips" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Interview Tips</span>
+                            <h3 class="blog-title">Top 20 Government Job Interview Questions & Answers</h3>
+                            <p class="blog-excerpt">Most commonly asked interview questions in government job interviews with sample answers and tips.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 11, 2024</span>
+                                <span class="blog-read-time">⏱️ 10 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='study-timetable.html'">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop" alt="Study Timetable" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Study Tips</span>
+                            <h3 class="blog-title">How to Create Effective Study Timetable for Competitive Exams</h3>
+                            <p class="blog-excerpt">Learn to create a balanced study schedule that covers all subjects while maintaining productivity and avoiding burnout.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 9, 2024</span>
+                                <span class="blog-read-time">⏱️ 7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='upsc-preparation.html'">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop" alt="UPSC Preparation" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">UPSC</span>
+                            <h3 class="blog-title">UPSC Civil Services: A Beginner's Complete Guide</h3>
+                            <p class="blog-excerpt">Everything you need to know about UPSC exam pattern, syllabus, strategy, and booklist for beginners.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 7, 2024</span>
+                                <span class="blog-read-time">⏱️ 12 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='teaching-jobs.html'">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&h=400&fit=crop" alt="Teaching Jobs" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Teaching</span>
+                            <h3 class="blog-title">CTET, UGC NET & KVS: Complete Guide to Teaching Jobs</h3>
+                            <p class="blog-excerpt">Understand different teaching exams, eligibility criteria, and career opportunities in government teaching sector.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 6, 2024</span>
+                                <span class="blog-read-time">⏱️ 9 min read</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" onclick="window.location.href='defence-jobs.html'">
+                        <img src="https://images.unsplash.com/photo-1517931524326-bdd55a541177?w=600&h=400&fit=crop" alt="Defence Jobs" class="blog-image">
+                        <div class="blog-content">
+                            <span class="blog-category">Defence</span>
+                            <h3 class="blog-title">Indian Army, Navy & Air Force: Complete Career Guide</h3>
+                            <p class="blog-excerpt">Explore various entry schemes, eligibility criteria, and preparation strategy for defence forces.</p>
+                            <div class="blog-meta">
+                                <span class="blog-date">📅 Mar 4, 2024</span>
+                                <span class="blog-read-time">⏱️ 8 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/adsense-config.js"></script>
+</body>
+</html>

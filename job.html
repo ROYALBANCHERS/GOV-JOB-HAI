@@ -9,6 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
     <style>
         .job-details {
             max-width: 1000px;
@@ -420,6 +428,9 @@
 
     <!-- Main Content -->
     <main class="job-details">
+        <!-- Ad Space -->
+        <div id="ad-job-detail" class="ad-container"></div>
+
         <a href="index.html" class="back-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -446,6 +457,8 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/adsense-config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>

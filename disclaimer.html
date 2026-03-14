@@ -4,8 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disclaimer - Government Job Hai</title>
-    <meta name="description" content="Disclaimer of Government Job Hai">
+    <meta name="description" content="Disclaimer of Government Job Hai - Read our complete disclaimer about job information accuracy and usage terms.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        .disclaimer-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .disclaimer-content h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .disclaimer-content h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .disclaimer-content p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .disclaimer-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .disclaimer-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .warning-box {
+            background: #fef3c7;
+            padding: 1.5rem;
+            border-left: 4px solid #f59e0b;
+            margin: 2rem 0;
+            border-radius: var(--radius-md);
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 1.5rem;
+            border-left: 4px solid #3b82f6;
+            margin: 2rem 0;
+            border-radius: var(--radius-md);
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -16,53 +71,127 @@
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="disclaimer.html" class="nav-link active">Disclaimer</a>
+                <a href="privacy.html" class="nav-link">Privacy</a>
+                <a href="terms.html" class="nav-link">Terms</a>
+                <a href="contact.html" class="nav-link">Contact</a>
             </div>
         </div>
     </nav>
 
+    <!-- Ad Space -->
+    <div class="container">
+        <div id="ad-header" class="ad-container"></div>
+    </div>
+
     <main class="main-content">
         <div class="container">
-            <div class="job-card" style="padding: 2rem;">
+            <div class="disclaimer-content">
                 <h1>Disclaimer</h1>
+                <p><strong>Last Updated: March 2024</strong></p>
 
-                <p>Last Updated: January 2024</p>
+                <div class="warning-box">
+                    <strong>⚠️ Important Notice:</strong> Government Job Hai is an informational portal only. We do not represent any government organization. Always verify information from official sources.
+                </div>
 
-                <h2>Important Notice</h2>
-                <p><strong>Government Job Hai</strong> is an informational portal that aggregates government job notifications from various official sources.</p>
+                <h2>1. Nature of Website</h2>
+                <p><strong>Government Job Hai</strong> is an educational and informational portal that aggregates government job notifications, admit cards, results, and admission updates from various official government sources across India.</p>
+                <p>We are <strong>not</strong> a government organization and we are <strong>not</strong> affiliated with any government department, ministry, or recruitment board.</p>
 
-                <h2>1. Information Accuracy</h2>
-                <p>While we strive to provide accurate and up-to-date information, we make no guarantees about the completeness, reliability, or accuracy of job listings, admit cards, results, or other information.</p>
-
-                <h2>2. Official Sources</h2>
-                <p>Users are strongly advised to:</p>
+                <h2>2. Information Accuracy</h2>
+                <p>While we strive hard to provide accurate and up-to-date information, we make no guarantees, warranties, or representations about:</p>
                 <ul>
-                    <li>Verify all information from official government websites</li>
-                    <li>Follow official notification guidelines</li>
-                    <li>Contact recruiting organizations directly for queries</li>
+                    <li>The completeness, accuracy, reliability, or timeliness of job listings</li>
+                    <li>The accuracy of exam dates, admit card releases, or result declarations</li>
+                    <li>The availability or functionality of external website links</li>
+                    <li>The authenticity of information sourced from third parties</li>
                 </ul>
 
-                <h2>3. Application Process</h2>
-                <p>We redirect users to official government portals for application. We are not involved in the recruitment process and do not collect any application fees.</p>
+                <h2>3. Official Sources Verification</h2>
+                <div class="info-box">
+                    <strong>📋 Users are strongly advised to:</strong>
+                    <ul>
+                        <li>Always verify all information from official government websites</li>
+                        <li>Follow only official notification guidelines and instructions</li>
+                        <li>Contact recruiting organizations directly for any queries or clarifications</li>
+                        <li>Check official websites for the most current and accurate information</li>
+                        <li>Not rely solely on information provided on this portal</li>
+                    </ul>
+                </div>
 
-                <h2>4. No Guarantee</h2>
-                <p>We do not guarantee:</p>
+                <h2>4. Application Process & Fees</h2>
+                <p>We redirect users to official government portals for job applications. Important points to note:</p>
                 <ul>
-                    <li>Job placements or interviews</li>
-                    <li>Accuracy of exam dates/results</li>
-                    <li>Availability of links to external websites</li>
+                    <li>We are <strong>not involved</strong> in the recruitment or application process</li>
+                    <li>We do <strong>not collect</strong> any application fees or charges</li>
+                    <li>All applications are made directly on official government websites</li>
+                    <li>We do <strong>not guarantee</strong> job placements, interviews, or selections</li>
                 </ul>
 
-                <h2>5. Third-Party Websites</h2>
-                <p>Our website contains links to external government websites. We have no control over the content and availability of these sites.</p>
+                <h2>5. No Guarantees</h2>
+                <p>Government Job Hai does not guarantee or promise:</p>
+                <ul>
+                    <li>Job placements or employment opportunities</li>
+                    <li>Interview calls or selection in any recruitment process</li>
+                    <li>Accuracy of exam dates, admit cards, or result announcements</li>
+                    <li>Availability or accessibility of linked external websites</li>
+                    <li>Outcomes based on information provided on this portal</li>
+                </ul>
 
-                <h2>6. Limitation of Liability</h2>
-                <p>Government Job Hai shall not be liable for any loss or damage arising from the use of this website or any linked external sites.</p>
+                <h2>6. Third-Party Websites & Links</h2>
+                <p>Our website contains links to external government and third-party websites. Please note:</p>
+                <ul>
+                    <li>We provide these links for user convenience only</li>
+                    <li>We have no control over the content, availability, or functionality of external sites</li>
+                    <li>We are not responsible for the privacy practices or content of external websites</li>
+                    <li>Inclusion of a link does not imply endorsement or recommendation</li>
+                </ul>
 
-                <h2>7. Educational Purpose</h2>
-                <p>This website is for educational and informational purposes only. Always refer to official government notifications for authentic information.</p>
+                <h2>7. Limitation of Liability</h2>
+                <p>Government Job Hai, its owners, or operators shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from:</p>
+                <ul>
+                    <li>Use or inability to use this website</li>
+                    <li>Errors, omissions, or inaccuracies in information</li>
+                    <li>Actions taken based on information provided on this portal</li>
+                    <li>Unavailability or performance of external linked websites</li>
+                    <li>Loss of data, opportunities, or any other losses</li>
+                </ul>
 
-                <div style="background: #fef3c7; padding: 1rem; border-left: 4px solid #f59e0b; margin: 2rem 0;">
-                    <strong>⚠️ Important:</strong> Never share personal/financial information with anyone claiming to be from Government Job Hai. We do not charge any fees for job information.
+                <h2>8. Educational Purpose Only</h2>
+                <p>This website is intended for <strong>educational and informational purposes only</strong>. All users should:</p>
+                <ul>
+                    <li>Use information provided as a reference point only</li>
+                    <li>Always refer to official government notifications for authentic information</li>
+                    <li>Exercise their own judgment and due diligence</li>
+                </ul>
+
+                <h2>9. No Professional Advice</h2>
+                <p>Information provided on this website does not constitute:</p>
+                <ul>
+                    <li>Legal, financial, or career advice</li>
+                    <li>Professional consultation of any kind</li>
+                    <li>Recommendations for specific actions or decisions</li>
+                </ul>
+
+                <h2>10. Copyright & Trademarks</h2>
+                <ul>
+                    <li>All government department names, logos, and trademarks belong to respective organizations</li>
+                    <li>We use these for informational purposes only and do not claim ownership</li>
+                    <li>Original content on this website is protected by copyright laws</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important Warning:</strong><br>
+                    Never share your personal information, bank details, Aadhar number, PAN card, or financial information with anyone claiming to be from Government Job Hai. We do not charge any fees for job information and we never ask for such details. Report any fraudulent activity immediately.
+                </div>
+
+                <h2>11. Changes to Disclaimer</h2>
+                <p>We reserve the right to modify this disclaimer at any time. Changes will be posted on this page with an updated revision date. Your continued use of this website constitutes acceptance of any changes.</p>
+
+                <h2>12. Contact Us</h2>
+                <p>If you have any questions about this disclaimer or our practices, please contact us through our <a href="contact.html" style="color: var(--primary-color);">Contact Page</a>.</p>
+
+                <div style="margin-top: 3rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); text-align: center;">
+                    <p style="margin: 0; color: var(--text-secondary);">By using Government Job Hai, you acknowledge that you have read, understood, and agree to this disclaimer.</p>
                 </div>
             </div>
         </div>
@@ -72,8 +201,13 @@
         <div class="container">
             <div class="footer-bottom">
                 <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">This website is for educational purposes only. Not affiliated with any government organization.</p>
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/adsense-config.js"></script>
 </body>
 </html>
