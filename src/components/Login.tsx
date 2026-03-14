@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+import { useAuth, API_BASE } from "../AuthContext";
 import { Mail, Lock, Loader2 } from "lucide-react";
 
 export default function Login() {
@@ -16,20 +16,23 @@ export default function Login() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (res.ok) {
-        login(data);
+        login(data.user, data.token);
         navigate("/");
       } else {
-        setError(data.error || "Login failed");
+        setError(data.message || data.error || "Login failed");
       }
     } catch (err) {
-      setError("An error occurred");
+      setError("An error occurred. Please check if the backend server is running.");
     } finally {
       setLoading(false);
     }
@@ -70,7 +73,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#004a99] text-white py-2 rounded-lg font-bold hover:bg-[#003d7a] transition-colors flex justify-center items-center"
+            className="w-full bg-[#004a99] text-white py-2 rounded-lg font-bold hover:bg-[#3d7a] transition-colors flex justify-center items-center"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Login"}
           </button>

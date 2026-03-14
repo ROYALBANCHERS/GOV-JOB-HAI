@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Job, CATEGORY_LABELS } from "../types";
 import Markdown from "react-markdown";
-import { 
-  Calendar, ArrowLeft, Share2, Printer, 
-  Download, Heart, CheckCircle2, MapPin, Briefcase, GraduationCap
+import {
+  Calendar, ArrowLeft, Share2, Printer,
+  Download, Heart, CheckCircle2, MapPin, Briefcase, GraduationCap, ExternalLink
 } from "lucide-react";
-import { useAuth } from "../AuthContext";
+import { useAuth, API_BASE } from "../AuthContext";
 
 export default function JobDetails() {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const navigate = useNavigate();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
@@ -19,24 +19,44 @@ export default function JobDetails() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch(`/api/jobs/${id}`)
+    fetch(`${API_BASE}/jobs/${id}`, {
+      headers: {
+        'Accept': 'application/json',
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
         setJob(data);
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }, [id]);
+
+  const getAuthHeaders = () => {
+    const headers: Record<string, string> = {
+      'Accept': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  };
 
   const handleSave = async () => {
     if (!user) return navigate("/login");
     try {
-      const res = await fetch(`/api/user/save-job/${id}`, { method: "POST" });
+      const res = await fetch(`${API_BASE}/save-job/${id}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+      });
       if (res.ok) {
         setIsSaved(true);
         setMessage("Job saved successfully!");
       } else {
         const data = await res.json();
-        setMessage(data.error || "Failed to save job");
+        setMessage(data.message || "Failed to save job");
       }
     } catch (err) {
       setMessage("An error occurred");
@@ -45,15 +65,34 @@ export default function JobDetails() {
   };
 
   const handleApply = async () => {
+    // If there's an external link, redirect to government portal directly
+    if (job?.external_link) {
+      window.open(job.external_link, '_blank');
+      setIsApplied(true);
+      setMessage("Redirecting to official government portal...");
+      setTimeout(() => setMessage(""), 3000);
+      return;
+    }
+
+    // If no external link, use the backend apply endpoint
     if (!user) return navigate("/login");
     try {
-      const res = await fetch(`/api/user/apply/${id}`, { method: "POST" });
+      const res = await fetch(`${API_BASE}/apply/${id}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+      });
+      const data = await res.json();
       if (res.ok) {
         setIsApplied(true);
-        setMessage("Application submitted successfully!");
+        if (data.external_link) {
+          // If backend returns an external link, redirect there
+          window.open(data.external_link, '_blank');
+          setMessage("Redirecting to official government portal...");
+        } else {
+          setMessage("Application submitted successfully!");
+        }
       } else {
-        const data = await res.json();
-        setMessage(data.error || "Failed to apply");
+        setMessage(data.message || "Failed to apply");
       }
     } catch (err) {
       setMessage("An error occurred");
@@ -104,16 +143,21 @@ export default function JobDetails() {
                 <Calendar className="w-3 h-3 mr-1" /> Last Date: {job.last_date}
               </span>
             )}
-            {job.is_filled === 1 && (
+            {job.is_filled && (
               <span className="bg-gray-200 text-gray-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded">
                 Position Filled
+              </span>
+            )}
+            {job.external_link && (
+              <span className="bg-green-100 text-green-700 text-[10px] font-bold uppercase px-2 py-0.5 rounded flex items-center">
+                <ExternalLink className="w-3 h-3 mr-1" /> External Apply
               </span>
             )}
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
             {job.title}
           </h1>
-          
+
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex items-center text-xs text-gray-500">
               <MapPin className="w-4 h-4 mr-2 text-blue-500" />
@@ -135,7 +179,7 @@ export default function JobDetails() {
 
           <div className="mt-6 flex items-center justify-between">
             <div className="flex items-center space-x-4 text-xs text-gray-500">
-              <span>Posted on: {new Date(job.created_at).toLocaleDateString()}</span>
+              <span>Posted on: {new Date(job.created_at || '').toLocaleDateString()}</span>
               <span>•</span>
               <div className="flex items-center space-x-2">
                 <button className="hover:text-blue-600 flex items-center">
@@ -146,8 +190,8 @@ export default function JobDetails() {
                 </button>
               </div>
             </div>
-            
-            <button 
+
+            <button
               onClick={handleSave}
               className={`p-2 rounded-full border transition-colors ${isSaved ? 'bg-red-50 border-red-200 text-red-500' : 'bg-white border-gray-200 text-gray-400 hover:text-red-500'}`}
             >
@@ -166,13 +210,21 @@ export default function JobDetails() {
 
           {/* Action Buttons */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button 
+            <button
               onClick={handleApply}
-              disabled={isApplied || job.is_filled === 1}
+              disabled={isApplied || job.is_filled}
               className={`flex items-center justify-center font-bold py-4 px-6 rounded-xl transition-colors shadow-lg ${isApplied ? 'bg-green-100 text-green-700 cursor-default' : 'bg-[#004a99] text-white hover:bg-[#003d7a] shadow-blue-900/20'}`}
             >
-              {isApplied ? <><CheckCircle2 className="w-5 h-5 mr-2" /> Applied</> : "Apply Online Now"}
+              {isApplied ? <><CheckCircle2 className="w-5 h-5 mr-2" /> Applied</> : (job.external_link ? <><ExternalLink className="w-5 h-5 mr-2" /> Apply on Official Portal</> : "Apply Online Now")}
             </button>
+            {job.external_link && (
+              <button
+                onClick={() => window.open(job.external_link, '_blank')}
+                className="flex items-center justify-center bg-green-600 text-white font-bold py-4 px-6 rounded-xl hover:bg-green-700 transition-colors border border-green-700"
+              >
+                <ExternalLink className="w-5 h-5 mr-2" /> Visit Official Website
+              </button>
+            )}
             <button className="flex items-center justify-center bg-gray-100 text-gray-700 font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-colors border border-gray-200">
               <Download className="w-5 h-5 mr-2" /> Download Notification
             </button>
@@ -183,7 +235,10 @@ export default function JobDetails() {
         <div className="bg-yellow-50 p-6 border-t border-yellow-100">
           <h3 className="font-bold text-yellow-800 mb-2">Important Note:</h3>
           <p className="text-sm text-yellow-700 leading-relaxed">
-            Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.
+            {job.external_link
+              ? `This job will redirect you to the official government portal. Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.`
+              : "Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements."
+            }
           </p>
         </div>
       </div>

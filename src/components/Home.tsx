@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Job, CATEGORY_LABELS } from "../types";
-import { 
-  ChevronRight, Calendar, ExternalLink, Bell as BellIcon, 
+import { API_BASE } from "../AuthContext";
+import {
+  ChevronRight, Calendar, ExternalLink, Bell as BellIcon,
   Search, Filter, MapPin, Briefcase, GraduationCap, Clock
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -11,6 +12,56 @@ export default function Home() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // Filter states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [filters, setFilters] = useState({
+    location: "",
+    industry: "",
+    qualification: ""
+  });
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async (queryStr = "") => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/jobs${queryStr}`, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      const data = await res.json();
+      setJobs(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (searchQuery) params.append("q", searchQuery);
+    Object.entries(filters).forEach(([key, val]) => {
+      if (val) params.append(key, val);
+    });
+    fetchJobs(`?${params.toString()}`);
+  };
+
+  const handleApplyNow = async (jobId: number, externalLink: string | null) => {
+    // If there's an external link, redirect directly to the government portal
+    if (externalLink) {
+      window.open(externalLink, '_blank');
+    } else {
+      // If no external link, go to job details page
+      navigate(`/job/${jobId}`);
+    }
+  };
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -201,9 +252,15 @@ export default function Home() {
                               </span>
                             )}
                           </div>
-                          <span className="text-[10px] font-bold text-blue-600 border border-blue-600 px-2 py-0.5 rounded hover:bg-blue-600 hover:text-white transition-colors">
-                            Apply
-                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleApplyNow(job.id, job.external_link);
+                            }}
+                            className="text-[10px] font-bold text-blue-600 border border-blue-600 px-2 py-0.5 rounded hover:bg-blue-600 hover:text-white transition-colors flex items-center gap-1"
+                          >
+                            Apply <ExternalLink className="w-2 h-2" />
+                          </button>
                         </div>
                       </Link>
                     </li>
