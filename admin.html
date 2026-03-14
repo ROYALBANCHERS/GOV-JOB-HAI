@@ -98,6 +98,31 @@
         .add-button:hover {
             background: #16a34a;
         }
+        .refresh-button {
+            padding: 0.625rem 1.25rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        .refresh-button:hover {
+            background: var(--primary-dark);
+        }
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .search-input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            min-width: 250px;
+        }
 
         .jobs-table {
             width: 100%;
@@ -166,6 +191,13 @@
         }
         .edit-button:hover {
             background: #dbeafe;
+        }
+        .view-button {
+            color: #059669;
+            border-color: #059669;
+        }
+        .view-button:hover {
+            background: #d1fae5;
         }
         .delete-button {
             color: var(--danger-color);
@@ -315,6 +347,27 @@
                 padding: 0.5rem;
             }
         }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -363,8 +416,14 @@
             <!-- Jobs Management -->
             <div class="jobs-management">
                 <div class="section-header">
-                    <h2 class="section-title">Manage Jobs</h2>
-                    <button class="add-button" onclick="openAddModal()">+ Add New Job</button>
+                    <div class="search-box">
+                        <h2 class="section-title">Manage Jobs</h2>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search jobs..." onkeyup="filterJobs()">
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="refresh-button" onclick="loadJobs()">🔄 Refresh</button>
+                        <button class="add-button" onclick="openAddModal()">+ Add New Job</button>
+                    </div>
                 </div>
                 <div id="jobsTableContainer">
                     <div class="loading">Loading jobs...</div>
@@ -465,6 +524,7 @@
     <script src="js/auth.js"></script>
     <script>
         let jobs = [];
+        let isBackendAvailable = true;
 
         document.addEventListener('DOMContentLoaded', async function() {
             // Check if user is admin
@@ -478,9 +538,48 @@
             }
 
             // Load dashboard data
+            await checkBackendAvailability();
             await loadStats();
             await loadJobs();
+
+            // Show backend status warning
+            if (!isBackendAvailable) {
+                showBackendWarning();
+            }
         });
+
+        async function checkBackendAvailability() {
+            try {
+                await api.getJobs({ limit: 1 });
+                isBackendAvailable = true;
+            } catch (error) {
+                isBackendAvailable = false;
+                console.warn('Backend unavailable, running in fallback mode');
+            }
+        }
+
+        function showBackendWarning() {
+            const warning = document.createElement('div');
+            warning.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: #fef3c7;
+                color: #92400e;
+                padding: 1rem;
+                text-align: center;
+                z-index: 9999;
+                border-bottom: 2px solid #f59e0b;
+                font-weight: 600;
+            `;
+            warning.innerHTML = `
+                ⚠️ Backend server is not running. Admin features are limited.
+                <a href="https://github.com/ROYALBANCHERS/GOV-JOB-HAI/blob/main/backend/README.md" target="_blank" style="text-decoration: underline;">View setup instructions</a>
+            `;
+            document.body.insertBefore(warning, document.body.firstChild);
+            document.body.style.paddingTop = '60px';
+        }
 
         async function loadStats() {
             try {
@@ -490,17 +589,35 @@
                 document.getElementById('totalApps').textContent = stats.totalApps || 0;
             } catch (error) {
                 console.error('Failed to load stats:', error);
+                document.getElementById('totalJobs').textContent = '-';
+                document.getElementById('totalUsers').textContent = '-';
+                document.getElementById('totalApps').textContent = '-';
             }
         }
 
         async function loadJobs() {
             const container = document.getElementById('jobsTableContainer');
+            container.innerHTML = '<div class="loading">Loading jobs...</div>';
+
             try {
                 jobs = await api.getJobs();
-                renderJobsTable(jobs);
+                filterJobs(); // This will render with any active filter
             } catch (error) {
-                container.innerHTML = '<div class="empty-state">Failed to load jobs. Please try again.</div>';
+                console.error('Failed to load jobs:', error);
+                container.innerHTML = '<div class="empty-state">Failed to load jobs. ' +
+                    (isBackendAvailable ? 'Please try again.' : 'Backend server is not running. Please start the Laravel backend server.') +
+                    '</div>';
             }
+        }
+
+        function filterJobs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredJobs = jobs.filter(job =>
+                job.title.toLowerCase().includes(searchTerm) ||
+                (job.location && job.location.toLowerCase().includes(searchTerm)) ||
+                (job.qualification && job.qualification.toLowerCase().includes(searchTerm))
+            );
+            renderJobsTable(filteredJobs);
         }
 
         function renderJobsTable(jobs) {
@@ -544,6 +661,7 @@
                                 <td>${job.views || 0}</td>
                                 <td>
                                     <div class="action-buttons">
+                                        <button class="action-button view-button" onclick="viewJob(${job.id})">View</button>
                                         <button class="action-button edit-button" onclick="editJob(${job.id})">Edit</button>
                                         <button class="action-button delete-button" onclick="deleteJob(${job.id})">Delete</button>
                                     </div>
@@ -560,6 +678,10 @@
             document.getElementById('jobForm').reset();
             document.getElementById('jobId').value = '';
             document.getElementById('jobModal').classList.add('active');
+        }
+
+        function viewJob(id) {
+            window.open(`job.html?id=${id}`, '_blank');
         }
 
         function editJob(id) {
@@ -591,6 +713,17 @@
         document.getElementById('jobForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            // Check backend availability
+            if (!isBackendAvailable) {
+                showMessage('⚠️ Cannot save: Backend server is not running. Please start the Laravel backend first.');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('.button-save');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
             const jobId = document.getElementById('jobId').value;
             const formData = {
                 title: document.getElementById('title').value,
@@ -611,31 +744,49 @@
             try {
                 if (jobId) {
                     await api.updateJob(jobId, formData);
-                    showMessage('Job updated successfully!');
+                    showMessage('✅ Job updated successfully!');
                 } else {
                     await api.createJob(formData);
-                    showMessage('Job created successfully!');
+                    showMessage('✅ Job created successfully!');
                 }
                 closeModal();
                 await loadJobs();
                 await loadStats();
             } catch (error) {
-                showMessage('Failed to save job: ' + error.message);
+                console.error('Failed to save job:', error);
+                let errorMsg = 'Failed to save job';
+                if (error.message) {
+                    errorMsg += ': ' + error.message;
+                }
+                if (error.errors) {
+                    errorMsg += '<br>' + Object.values(error.errors).flat().join('<br>');
+                }
+                showMessage('❌ ' + errorMsg);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
         });
 
         async function deleteJob(id) {
-            if (!confirm('Are you sure you want to delete this job?')) {
+            // Check backend availability
+            if (!isBackendAvailable) {
+                showMessage('⚠️ Cannot delete: Backend server is not running. Please start the Laravel backend first.');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this job? This action cannot be undone.')) {
                 return;
             }
 
             try {
                 await api.deleteJob(id);
-                showMessage('Job deleted successfully!');
+                showMessage('✅ Job deleted successfully!');
                 await loadJobs();
                 await loadStats();
             } catch (error) {
-                showMessage('Failed to delete job: ' + error.message);
+                console.error('Failed to delete job:', error);
+                showMessage('❌ Failed to delete job: ' + (error.message || 'Unknown error'));
             }
         }
 
@@ -664,17 +815,23 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: #004a99;
+                background: ${message.includes('❌') ? '#dc2626' : message.includes('⚠️') ? '#f59e0b' : '#004a99'};
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 0.5rem;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                z-index: 9999;
+                z-index: 10000;
+                max-width: 400px;
+                word-wrap: break-word;
+                animation: slideIn 0.3s ease-out;
             `;
-            toast.textContent = message;
+            toast.innerHTML = message;
             document.body.appendChild(toast);
 
-            setTimeout(() => toast.remove(), 3000);
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
         }
     </script>
 </body>
