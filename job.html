@@ -482,16 +482,18 @@
                 'admission': 'Admission'
             };
 
-            const hasExternalLink = job.external_link;
+            const applyLink = job.apply_link || job.external_link;
+            const hasApplyLink = applyLink;
 
-            container.innerHTML = `
+            let html = `
                 <div class="job-detail-container">
                     <!-- Header Card -->
                     <div class="detail-card header-card">
                         <div class="detail-badges">
                             <span class="detail-badge badge-blue">${categoryLabels[job.category] || 'Job'}</span>
                             ${job.last_date ? `<span class="detail-badge badge-red">Last Date: ${formatDate(job.last_date)}</span>` : ''}
-                            ${hasExternalLink ? `<span class="detail-badge badge-green">Apply Online</span>` : ''}
+                            ${hasApplyLink ? `<span class="detail-badge badge-green">Apply Online</span>` : ''}
+                            ${job.vacancy_count ? `<span class="detail-badge badge-green">Total Vacancies: ${job.vacancy_count}</span>` : ''}
                         </div>
                         <h1 class="detail-title">${escapeHtml(job.title)}</h1>
                         <div class="detail-meta">
@@ -529,9 +531,11 @@
                         </h2>
                         <p class="card-content">${escapeHtml(job.short_info || 'Click below to view full details and apply online.')}</p>
                     </div>
+            `;
 
-                    <!-- Important Dates Card -->
-                    ${job.last_date || job.created_at ? `
+            // Important Dates Card (only if there are dates)
+            if (job.last_date || job.created_at || job.exam_date || job.admit_card_date) {
+                html += `
                     <div class="detail-card dates-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -549,17 +553,38 @@
                                 <span class="date-value">${formatDate(job.created_at)}</span>
                             </div>
                             ` : ''}
+                            ${job.post_date ? `
+                            <div class="date-item">
+                                <span class="date-label">Start Date</span>
+                                <span class="date-value">${formatDate(job.post_date)}</span>
+                            </div>
+                            ` : ''}
                             ${job.last_date ? `
                             <div class="date-item highlight">
                                 <span class="date-label">Last Date to Apply</span>
                                 <span class="date-value">${formatDate(job.last_date)}</span>
                             </div>
                             ` : ''}
+                            ${job.exam_date ? `
+                            <div class="date-item highlight">
+                                <span class="date-label">Exam Date</span>
+                                <span class="date-value">${formatDate(job.exam_date)}</span>
+                            </div>
+                            ` : ''}
+                            ${job.admit_card_date ? `
+                            <div class="date-item">
+                                <span class="date-label">Admit Card Date</span>
+                                <span class="date-value">${formatDate(job.admit_card_date)}</span>
+                            </div>
+                            ` : ''}
                         </div>
                     </div>
-                    ` : ''}
+                `;
+            }
 
-                    <!-- Application Fee Card -->
+            // Application Fee Card (only if fee information exists)
+            if (job.fee_general || job.fee_sc_st || job.fee_payment_mode) {
+                html += `
                     <div class="detail-card fee-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -569,21 +594,31 @@
                             Application Fee
                         </h2>
                         <div class="fee-list">
+                            ${job.fee_general ? `
                             <div class="fee-item">
                                 <span class="fee-category">General/OBC/EWS</span>
-                                <span class="fee-amount">₹100</span>
+                                <span class="fee-amount">${escapeHtml(job.fee_general)}</span>
                             </div>
+                            ` : ''}
+                            ${job.fee_sc_st ? `
                             <div class="fee-item">
                                 <span class="fee-category">SC/ST/PWD/Women</span>
-                                <span class="fee-amount">Nil</span>
+                                <span class="fee-amount">${escapeHtml(job.fee_sc_st)}</span>
                             </div>
+                            ` : ''}
+                            ${job.fee_payment_mode ? `
                             <div class="fee-note">
-                                <strong>Payment Mode:</strong> Online (Debit Card/Credit Card/Net Banking/UPI)
+                                <strong>Payment Mode:</strong> ${escapeHtml(job.fee_payment_mode)}
                             </div>
+                            ` : ''}
                         </div>
                     </div>
+                `;
+            }
 
-                    <!-- Age Limit Card -->
+            // Age Limit Card (only if age information exists)
+            if (job.age_min || job.age_max || job.age_relaxation) {
+                html += `
                     <div class="detail-card age-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -593,24 +628,27 @@
                             Age Limit
                         </h2>
                         <div class="age-content">
+                            ${job.age_min || job.age_max ? `
                             <div class="age-range">
-                                <span class="age-min">18 Years</span>
+                                <span class="age-min">${escapeHtml(job.age_min || 'N/A')}</span>
                                 <span class="age-separator">to</span>
-                                <span class="age-max">30 Years</span>
+                                <span class="age-max">${escapeHtml(job.age_max || 'N/A')}</span>
                             </div>
+                            ` : ''}
+                            ${job.age_relaxation ? `
                             <div class="age-relaxation">
                                 <strong>Age Relaxation:</strong>
-                                <ul class="relaxation-list">
-                                    <li>SC/ST: 5 Years</li>
-                                    <li>OBC: 3 Years</li>
-                                    <li>PWD: 10 Years</li>
-                                </ul>
+                                <div style="margin-top: 0.5rem; white-space: pre-wrap;">${escapeHtml(job.age_relaxation)}</div>
                             </div>
+                            ` : ''}
                         </div>
                     </div>
+                `;
+            }
 
-                    <!-- Qualification Card -->
-                    ${job.qualification ? `
+            // Qualification Card
+            if (job.qualification) {
+                html += `
                     <div class="detail-card qualification-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -621,15 +659,14 @@
                         </h2>
                         <div class="qualification-content">
                             <p class="qualification-main">${escapeHtml(job.qualification)}</p>
-                            <ul class="qualification-list">
-                                <li>Bachelor's Degree in any discipline from recognized university</li>
-                                <li>Final year students can also apply</li>
-                            </ul>
                         </div>
                     </div>
-                    ` : ''}
+                `;
+            }
 
-                    <!-- Vacancy Details Card -->
+            // Vacancy Details Card
+            if (job.vacancy_details || job.vacancy_count) {
+                html += `
                     <div class="detail-card vacancy-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -639,20 +676,53 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                             Vacancy Details
+                            ${job.vacancy_count ? `<span style="margin-left: auto; color: var(--success-color); font-weight: 700;">Total: ${job.vacancy_count}</span>` : ''}
                         </h2>
-                        <div class="vacancy-table">
-                            <div class="vacancy-row vacancy-header">
-                                <span>Post Name</span>
-                                <span>Total</span>
-                            </div>
-                            <div class="vacancy-row">
-                                <span>Various Posts</span>
-                                <span class="vacancy-count">Multiple</span>
-                            </div>
-                        </div>
+                        ${job.vacancy_details ? `
+                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.vacancy_details)}</div>
+                        ` : ''}
                     </div>
+                `;
+            }
 
-                    <!-- Full Details Card -->
+            // Selection Process Card
+            if (job.selection_process) {
+                html += `
+                    <div class="detail-card content-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            Selection Process
+                        </h2>
+                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.selection_process)}</div>
+                    </div>
+                `;
+            }
+
+            // Documents Required Card
+            if (job.documents_required) {
+                html += `
+                    <div class="detail-card content-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Documents Required
+                        </h2>
+                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.documents_required)}</div>
+                    </div>
+                `;
+            }
+
+            // Full Details Card
+            if (job.content) {
+                html += `
                     <div class="detail-card content-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -662,11 +732,24 @@
                             Detailed Information
                         </h2>
                         <div class="job-description">
-                            ${formatMarkdown(job.content || job.short_info || 'No detailed information available.')}
+                            ${formatMarkdown(job.content)}
                         </div>
                     </div>
+                `;
+            }
 
-                    <!-- Apply Now Card -->
+            // Important Notes Card
+            if (job.important_notes) {
+                html += `
+                    <div class="detail-card note-card">
+                        <h2 class="card-title">📝 Important Notes</h2>
+                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.important_notes)}</div>
+                    </div>
+                `;
+            }
+
+            // Apply Now Card
+            html += `
                     <div class="detail-card apply-card">
                         <h2 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -686,32 +769,45 @@
                             <li>Submit the form and take a printout for future reference</li>
                         </ol>
                         <div class="apply-buttons">
-                            <button class="apply-btn btn-primary" onclick="applyToJob(${job.id}, '${hasExternalLink ? escapeHtml(job.external_link) : ''}')">
-                                ${hasExternalLink ? `
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    Apply Online on Official Portal
-                                ` : `
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="8.5" cy="7" r="4"></circle>
-                                        <polyline points="17 11 19 13 23 9"></polyline>
-                                    </svg>
-                                    Apply Now
-                                `}
+                            ${hasApplyLink ? `
+                            <button class="apply-btn btn-primary" onclick="window.open('${escapeHtml(applyLink)}', '_blank')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Apply Online on Official Portal
                             </button>
-                            ${hasExternalLink ? `
-                                <a href="${escapeHtml(job.external_link)}" target="_blank" class="apply-btn btn-secondary">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                    </svg>
-                                    Visit Official Website
-                                </a>
+                            ` : `
+                            <button class="apply-btn btn-primary" onclick="applyToJob(${job.id}, '')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <polyline points="17 11 19 13 23 9"></polyline>
+                                </svg>
+                                Apply Now
+                            </button>
+                            `}
+                            ${job.notification_link ? `
+                            <a href="${escapeHtml(job.notification_link)}" target="_blank" class="apply-btn btn-secondary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                </svg>
+                                Download Notification
+                            </a>
+                            ` : ''}
+                            ${job.official_website ? `
+                            <a href="${escapeHtml(job.official_website)}" target="_blank" class="apply-btn btn-secondary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                                Visit Official Website
+                            </a>
                             ` : ''}
                         </div>
                     </div>
@@ -725,11 +821,13 @@
                             <li>Keep all documents ready before starting the application</li>
                             <li>Apply before the last date to avoid last-minute rush</li>
                             <li>Take a printout of the submitted application form</li>
-                            ${hasExternalLink ? '<li>This job will redirect you to the official government portal</li>' : ''}
+                            ${hasApplyLink ? '<li>This job will redirect you to the official government portal</li>' : ''}
                         </ul>
                     </div>
                 </div>
             `;
+
+            container.innerHTML = html;
         }
 
         async function applyToJob(jobId, externalLink) {

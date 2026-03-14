@@ -440,75 +440,207 @@
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <form id="jobForm">
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                     <input type="hidden" id="jobId">
-                    <div class="form-grid">
+
+                    <!-- Section: Basic Information -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            📋 Basic Information
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group form-full">
+                                <label for="title">Job Title *</label>
+                                <input type="text" id="title" name="title" required placeholder="e.g., SSC CGL 2024 Online Form">
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category *</label>
+                                <select id="category" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="latest_job">Latest Job</option>
+                                    <option value="admit_card">Admit Card</option>
+                                    <option value="result">Result</option>
+                                    <option value="answer_key">Answer Key</option>
+                                    <option value="syllabus">Syllabus</option>
+                                    <option value="admission">Admission</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="job_type">Job Type</label>
+                                <select id="job_type" name="job_type">
+                                    <option value="">Select Type</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Contract">Contract</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" id="location" name="location" placeholder="e.g., All India, Delhi">
+                            </div>
+                            <div class="form-group">
+                                <label for="qualification">Qualification</label>
+                                <input type="text" id="qualification" name="qualification" placeholder="e.g., Graduate, 10th Pass">
+                            </div>
+                            <div class="form-group">
+                                <label for="vacancy_count">Vacancy Count</label>
+                                <input type="number" id="vacancy_count" name="vacancy_count" placeholder="e.g., 5000">
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="short_info">Short Info</label>
+                                <input type="text" id="short_info" name="short_info" placeholder="Brief description for listing view">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Important Dates -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            📅 Important Dates
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="post_date">Post Date</label>
+                                <input type="date" id="post_date" name="post_date">
+                            </div>
+                            <div class="form-group">
+                                <label for="last_date">Last Date to Apply</label>
+                                <input type="date" id="last_date" name="last_date">
+                            </div>
+                            <div class="form-group">
+                                <label for="exam_date">Exam Date</label>
+                                <input type="date" id="exam_date" name="exam_date">
+                            </div>
+                            <div class="form-group">
+                                <label for="admit_card_date">Admit Card Date</label>
+                                <input type="date" id="admit_card_date" name="admit_card_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Age Limit -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            👤 Age Limit
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age_min">Minimum Age</label>
+                                <input type="text" id="age_min" name="age_min" placeholder="e.g., 18 Years">
+                            </div>
+                            <div class="form-group">
+                                <label for="age_max">Maximum Age</label>
+                                <input type="text" id="age_max" name="age_max" placeholder="e.g., 30 Years">
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="age_relaxation">Age Relaxation Details</label>
+                                <textarea id="age_relaxation" name="age_relaxation" placeholder="SC/ST: 5 Years&#10;OBC: 3 Years&#10;PWD: 10 Years" style="min-height: 80px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Application Fee -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            💰 Application Fee
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fee_general">General/OBC/EWS Fee</label>
+                                <input type="text" id="fee_general" name="fee_general" placeholder="e.g., ₹100">
+                            </div>
+                            <div class="form-group">
+                                <label for="fee_sc_st">SC/ST/PWD Fee</label>
+                                <input type="text" id="fee_sc_st" name="fee_sc_st" placeholder="e.g., Nil or ₹50">
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="fee_payment_mode">Payment Mode</label>
+                                <input type="text" id="fee_payment_mode" name="fee_payment_mode" placeholder="e.g., Online (Debit Card/Credit Card/Net Banking/UPI)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Vacancy Details -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            📊 Vacancy Details
+                        </h4>
                         <div class="form-group form-full">
-                            <label for="title">Job Title *</label>
-                            <input type="text" id="title" name="title" required placeholder="e.g., SSC CGL 2024 Online Form">
+                            <label for="vacancy_details">Vacancy Breakup</label>
+                            <textarea id="vacancy_details" name="vacancy_details" placeholder="Post Name - Vacancies&#10;Officer - 500&#10;Assistant - 1000" style="min-height: 100px;"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="category">Category *</label>
-                            <select id="category" name="category" required>
-                                <option value="">Select Category</option>
-                                <option value="latest_job">Latest Job</option>
-                                <option value="admit_card">Admit Card</option>
-                                <option value="result">Result</option>
-                                <option value="answer_key">Answer Key</option>
-                                <option value="syllabus">Syllabus</option>
-                                <option value="admission">Admission</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="job_type">Job Type</label>
-                            <select id="job_type" name="job_type">
-                                <option value="">Select Type</option>
-                                <option value="Full-time">Full-time</option>
-                                <option value="Part-time">Part-time</option>
-                                <option value="Contract">Contract</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="post_date">Post Date</label>
-                            <input type="date" id="post_date" name="post_date">
-                        </div>
-                        <div class="form-group">
-                            <label for="last_date">Last Date</label>
-                            <input type="date" id="last_date" name="last_date">
-                        </div>
-                        <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" name="location" placeholder="e.g., All India, Delhi">
-                        </div>
-                        <div class="form-group">
-                            <label for="qualification">Qualification</label>
-                            <input type="text" id="qualification" name="qualification" placeholder="e.g., Graduate, 10th Pass">
-                        </div>
-                        <div class="form-group">
-                            <label for="experience_level">Experience Level</label>
-                            <select id="experience_level" name="experience_level">
-                                <option value="">Select Level</option>
-                                <option value="Entry">Entry Level</option>
-                                <option value="Mid">Mid Level</option>
-                                <option value="Senior">Senior Level</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="industry">Industry</label>
-                            <input type="text" id="industry" name="industry" placeholder="e.g., Government, Railway">
-                        </div>
+                    </div>
+
+                    <!-- Section: Selection Process -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            ✅ Selection Process
+                        </h4>
                         <div class="form-group form-full">
-                            <label for="external_link">External Apply Link (Government Portal)</label>
-                            <input type="url" id="external_link" name="external_link" placeholder="e.g., https://ssc.nic.in">
-                            <div class="form-help">Users will be redirected to this official government portal when they click "Apply Now"</div>
+                            <label for="selection_process">Selection Stages</label>
+                            <textarea id="selection_process" name="selection_process" placeholder="1. Written Examination (CBT)&#10;2. Physical Efficiency Test&#10;3. Document Verification&#10;4. Medical Examination" style="min-height: 100px;"></textarea>
                         </div>
+                    </div>
+
+                    <!-- Section: Documents Required -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            📎 Documents Required
+                        </h4>
                         <div class="form-group form-full">
-                            <label for="short_info">Short Info</label>
-                            <input type="text" id="short_info" name="short_info" placeholder="Brief description for listing view">
+                            <label for="documents_required">Documents List</label>
+                            <textarea id="documents_required" name="documents_required" placeholder="- Recent Passport Size Photograph&#10;- Signature&#10;- 10th Certificate&#10;- 12th Certificate&#10;- Graduation Certificate&#10;- ID Proof (Aadhar/PAN)" style="min-height: 100px;"></textarea>
                         </div>
-                        <div class="form-group form-full">
-                            <label for="content">Full Content (Markdown supported)</label>
-                            <textarea id="content" name="content" placeholder="# Detailed job description&#10;&#10;- Eligibility&#10;- How to Apply&#10;- Important Dates"></textarea>
+                    </div>
+
+                    <!-- Section: Official Links -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            🔗 Official Links
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="apply_link">Apply Online Link</label>
+                                <input type="url" id="apply_link" name="apply_link" placeholder="https://example.com/apply">
+                            </div>
+                            <div class="form-group">
+                                <label for="notification_link">Notification PDF Link</label>
+                                <input type="url" id="notification_link" name="notification_link" placeholder="https://example.com/notification.pdf">
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="official_website">Official Website</label>
+                                <input type="url" id="official_website" name="official_website" placeholder="https://ssc.nic.in">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Additional Information -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;">
+                        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                            📝 Additional Information
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="experience_level">Experience Level</label>
+                                <select id="experience_level" name="experience_level">
+                                    <option value="">Select Level</option>
+                                    <option value="Entry">Entry Level</option>
+                                    <option value="Mid">Mid Level</option>
+                                    <option value="Senior">Senior Level</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="industry">Industry</label>
+                                <input type="text" id="industry" name="industry" placeholder="e.g., Government, Railway">
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="important_notes">Important Notes</label>
+                                <textarea id="important_notes" name="important_notes" placeholder="Any important information for applicants&#10;- Read notification carefully&#10;- Apply before last date" style="min-height: 80px;"></textarea>
+                            </div>
+                            <div class="form-group form-full">
+                                <label for="content">Full Content (Markdown supported)</label>
+                                <textarea id="content" name="content" placeholder="# Detailed job description&#10;&#10;- Eligibility&#10;- How to Apply&#10;- Important Dates" style="min-height: 150px;"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -690,17 +822,50 @@
 
             document.getElementById('modalTitle').textContent = 'Edit Job';
             document.getElementById('jobId').value = job.id;
+
+            // Basic Information
             document.getElementById('title').value = job.title || '';
             document.getElementById('category').value = job.category || '';
             document.getElementById('job_type').value = job.job_type || '';
-            document.getElementById('post_date').value = job.post_date || '';
-            document.getElementById('last_date').value = job.last_date || '';
             document.getElementById('location').value = job.location || '';
             document.getElementById('qualification').value = job.qualification || '';
+            document.getElementById('vacancy_count').value = job.vacancy_count || '';
+            document.getElementById('short_info').value = job.short_info || '';
+
+            // Important Dates
+            document.getElementById('post_date').value = job.post_date || '';
+            document.getElementById('last_date').value = job.last_date || '';
+            document.getElementById('exam_date').value = job.exam_date || '';
+            document.getElementById('admit_card_date').value = job.admit_card_date || '';
+
+            // Age Limit
+            document.getElementById('age_min').value = job.age_min || '';
+            document.getElementById('age_max').value = job.age_max || '';
+            document.getElementById('age_relaxation').value = job.age_relaxation || '';
+
+            // Application Fee
+            document.getElementById('fee_general').value = job.fee_general || '';
+            document.getElementById('fee_sc_st').value = job.fee_sc_st || '';
+            document.getElementById('fee_payment_mode').value = job.fee_payment_mode || '';
+
+            // Vacancy Details
+            document.getElementById('vacancy_details').value = job.vacancy_details || '';
+
+            // Selection Process
+            document.getElementById('selection_process').value = job.selection_process || '';
+
+            // Documents Required
+            document.getElementById('documents_required').value = job.documents_required || '';
+
+            // Official Links
+            document.getElementById('apply_link').value = job.apply_link || '';
+            document.getElementById('notification_link').value = job.notification_link || '';
+            document.getElementById('official_website').value = job.official_website || '';
+
+            // Additional Information
             document.getElementById('experience_level').value = job.experience_level || '';
             document.getElementById('industry').value = job.industry || '';
-            document.getElementById('external_link').value = job.external_link || '';
-            document.getElementById('short_info').value = job.short_info || '';
+            document.getElementById('important_notes').value = job.important_notes || '';
             document.getElementById('content').value = job.content || '';
 
             document.getElementById('jobModal').classList.add('active');
@@ -726,17 +891,41 @@
 
             const jobId = document.getElementById('jobId').value;
             const formData = {
+                // Basic Information
                 title: document.getElementById('title').value,
                 category: document.getElementById('category').value,
                 job_type: document.getElementById('job_type').value,
-                post_date: document.getElementById('post_date').value,
-                last_date: document.getElementById('last_date').value,
                 location: document.getElementById('location').value,
                 qualification: document.getElementById('qualification').value,
+                vacancy_count: document.getElementById('vacancy_count').value || null,
+                short_info: document.getElementById('short_info').value,
+                // Important Dates
+                post_date: document.getElementById('post_date').value || null,
+                last_date: document.getElementById('last_date').value || null,
+                exam_date: document.getElementById('exam_date').value || null,
+                admit_card_date: document.getElementById('admit_card_date').value || null,
+                // Age Limit
+                age_min: document.getElementById('age_min').value,
+                age_max: document.getElementById('age_max').value,
+                age_relaxation: document.getElementById('age_relaxation').value,
+                // Application Fee
+                fee_general: document.getElementById('fee_general').value,
+                fee_sc_st: document.getElementById('fee_sc_st').value,
+                fee_payment_mode: document.getElementById('fee_payment_mode').value,
+                // Vacancy Details
+                vacancy_details: document.getElementById('vacancy_details').value,
+                // Selection Process
+                selection_process: document.getElementById('selection_process').value,
+                // Documents Required
+                documents_required: document.getElementById('documents_required').value,
+                // Official Links
+                apply_link: document.getElementById('apply_link').value || null,
+                notification_link: document.getElementById('notification_link').value || null,
+                official_website: document.getElementById('official_website').value || null,
+                // Additional Information
                 experience_level: document.getElementById('experience_level').value,
                 industry: document.getElementById('industry').value,
-                external_link: document.getElementById('external_link').value,
-                short_info: document.getElementById('short_info').value,
+                important_notes: document.getElementById('important_notes').value,
                 content: document.getElementById('content').value,
                 is_filled: false
             };

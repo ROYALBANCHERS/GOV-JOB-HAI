@@ -24,6 +24,29 @@ class Job extends Model
         'qualification',
         'is_filled',
         'views',
+        // Age details
+        'age_min',
+        'age_max',
+        'age_relaxation',
+        // Fee details
+        'fee_general',
+        'fee_sc_st',
+        'fee_payment_mode',
+        // Vacancy details
+        'vacancy_details',
+        'vacancy_count',
+        // Important dates
+        'exam_date',
+        'admit_card_date',
+        // Selection & documents
+        'selection_process',
+        'documents_required',
+        // Official links
+        'notification_link',
+        'apply_link',
+        'official_website',
+        // Additional info
+        'important_notes',
     ];
 
     protected $casts = [

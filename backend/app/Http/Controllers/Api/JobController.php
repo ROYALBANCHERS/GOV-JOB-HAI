@@ -82,6 +82,29 @@ class JobController extends Controller
             'industry' => 'nullable|string',
             'experience_level' => 'nullable|string',
             'qualification' => 'nullable|string',
+            // Age details
+            'age_min' => 'nullable|string|max:50',
+            'age_max' => 'nullable|string|max:50',
+            'age_relaxation' => 'nullable|string',
+            // Fee details
+            'fee_general' => 'nullable|string',
+            'fee_sc_st' => 'nullable|string',
+            'fee_payment_mode' => 'nullable|string',
+            // Vacancy details
+            'vacancy_details' => 'nullable|string',
+            'vacancy_count' => 'nullable|integer',
+            // Important dates
+            'exam_date' => 'nullable|date',
+            'admit_card_date' => 'nullable|date',
+            // Selection & documents
+            'selection_process' => 'nullable|string',
+            'documents_required' => 'nullable|string',
+            // Official links
+            'notification_link' => 'nullable|url',
+            'apply_link' => 'nullable|url',
+            'official_website' => 'nullable|url',
+            // Additional info
+            'important_notes' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -112,6 +135,29 @@ class JobController extends Controller
             'experience_level' => 'nullable|string',
             'qualification' => 'nullable|string',
             'is_filled' => 'boolean',
+            // Age details
+            'age_min' => 'nullable|string|max:50',
+            'age_max' => 'nullable|string|max:50',
+            'age_relaxation' => 'nullable|string',
+            // Fee details
+            'fee_general' => 'nullable|string',
+            'fee_sc_st' => 'nullable|string',
+            'fee_payment_mode' => 'nullable|string',
+            // Vacancy details
+            'vacancy_details' => 'nullable|string',
+            'vacancy_count' => 'nullable|integer',
+            // Important dates
+            'exam_date' => 'nullable|date',
+            'admit_card_date' => 'nullable|date',
+            // Selection & documents
+            'selection_process' => 'nullable|string',
+            'documents_required' => 'nullable|string',
+            // Official links
+            'notification_link' => 'nullable|url',
+            'apply_link' => 'nullable|url',
+            'official_website' => 'nullable|url',
+            // Additional info
+            'important_notes' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
