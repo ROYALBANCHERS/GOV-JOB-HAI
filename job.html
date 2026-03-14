@@ -503,15 +503,15 @@
                 ` : ''}
 
                 <!-- 3. STEP-BY-STEP INSTRUCTION BOX -->
-                ${applyLink ? `
                 <div class="detail-card">
-                    <h3 class="section-header">📝 How to Fill Online Form</h3>
+                    <h3 class="section-header">📝 How to Apply / आवेदन कैसे करें</h3>
                     <div class="card-content">
                         <div class="how-to-fill-box">
-                            <h4>Steps to Apply Online / आवेदन करने के चरण:</h4>
-                            <ol>
-                                <li><strong>Visit Official Website:</strong> Click on the "Apply Online" link given below to visit the official website.<br>
-                                <span style="color: #4b5563;">आधिकारिक वेबसाइट पर जाएं: नीचे दिए गए "Apply Online" लिंक पर क्लिक करें।</span></li>
+                            ${applyLink ? `
+                            <h4 style="margin: 0 0 1rem 0;">Steps to Apply Online / आवेदन करने के चरण:</h4>
+                            <ol style="margin: 0;">
+                                <li><strong>Visit Official Website:</strong> Click on the "Apply Online Now" button given above to visit the official website.<br>
+                                <span style="color: #4b5563;">आधिकारिक वेबसाइट पर जाएं: ऊपर दिए गए "Apply Online Now" बटन पर क्लिक करें।</span></li>
 
                                 <li><strong>Read Notification:</strong> Download and read the official notification carefully before applying.<br>
                                 <span style="color: #4b5563;">अधिसूचना पढ़ें: आवेदन करने से पहले आधिकारिक अधिसूचना ध्यान से पढ़ें।</span></li>
@@ -534,10 +534,58 @@
                                 <li><strong>Print Application:</strong> Take a printout of the submitted application form for future reference.<br>
                                 <span style="color: #4b5563;">आवेदन की प्रिंट आउट लें: भविष्य के संदर्भ के लिए जमा किए गए आवेदन पत्र की प्रिंट आउट लें।</span></li>
                             </ol>
+                            ` : `
+                            <div style="background: #fff7ed; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+                                <h4 style="margin: 0 0 1rem 0; color: #92400e;">📋 Application Information / आवेदन जानकारी:</h4>
+                                <p style="margin: 0 0 1rem 0; color: #78716c; line-height: 1.6;">
+                                    <strong>Important:</strong> Application link will be available soon. Please keep checking this page for updates.
+                                </p>
+                                <ul style="margin: 0; padding-left: 1.25rem; color: #78716c;">
+                                    ${job.official_website ? `<li style="margin-bottom: 0.5rem;">📌 Visit the <a href="${escapeHtml(job.official_website)}" target="_blank" style="color: #1e40af; font-weight: 600;">Official Website</a> for the latest updates</li>` : ''}
+                                    ${job.last_date ? `<li style="margin-bottom: 0.5rem;">📅 Last Date to Apply: <strong>${formatDate(job.last_date)}</strong></li>` : ''}
+                                    <li style="margin-bottom: 0.5rem;">📢 Check this page regularly for application link updates</li>
+                                    <li style="margin-bottom: 0;">🔔 Enable notifications to stay informed</li>
+                                </ul>
+                            </div>
+                            `}
                         </div>
                     </div>
                 </div>
-                ` : ''}
+
+                <!-- PROMINENT APPLY BUTTON SECTION -->
+                <div class="detail-card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid #f59e0b;">
+                    <div style="padding: 2rem; text-align: center;">
+                        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: #92400e;">
+                            🚀 Quick Apply Links
+                        </h3>
+                        ${applyLink ? `
+                        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                            <a href="${escapeHtml(applyLink)}" target="_blank" style="display: inline-block; background: #dc2626; color: white; padding: 1rem 2.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 700; font-size: 1.125rem; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); transition: all 0.3s;" onmouseover="this.style.background='#b91c1c'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='#dc2626'; this.style.transform='scale(1)';">
+                                📝 Apply Online Now
+                            </a>
+                            ${notificationLink && notificationLink !== applyLink ? `
+                            <a href="${escapeHtml(notificationLink)}" target="_blank" style="display: inline-block; background: white; color: #1e40af; padding: 1rem 2rem; border: 2px solid #3b82f6; border-radius: 0.5rem; text-decoration: none; font-weight: 700; font-size: 1.125rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s;" onmouseover="this.style.background='#eff6ff'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='white'; this.style.transform='scale(1)';">
+                                📄 Download Notification
+                            </a>
+                            ` : ''}
+                        </div>
+                        ` : `
+                        <div style="background: white; padding: 1.5rem; border-radius: 0.5rem; border: 2px dashed #f59e0b; margin-top: 1rem;">
+                            <p style="margin: 0; color: #92400e; font-size: 1rem;">
+                                <strong style="font-size: 1.125rem;">⚠️ Application Links</strong><br>
+                                <span style="color: #78716c;">Apply link not available yet. Please check back later or visit the official website.</span>
+                            </p>
+                            ${job.official_website ? `
+                            <div style="margin-top: 1rem;">
+                                <a href="${escapeHtml(job.official_website)}" target="_blank" style="display: inline-block; background: #1e40af; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 1rem;">
+                                    🌐 Visit Official Website
+                                </a>
+                            </div>
+                            ` : ''}
+                        </div>
+                        `}
+                    </div>
+                </div>
 
                 <!-- 4. USEFUL LINKS SECTION (Call to Action) -->
                 <div class="detail-card">
