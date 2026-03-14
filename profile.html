@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Government Job Hai</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Government Job Hai</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+                <button id="logoutButton" class="nav-link" style="background:none;border:none;cursor:pointer;">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <div class="auth-container">
+                <h1 class="auth-title">User Profile</h1>
+                <div id="profileContent">
+                    <div class="loading">Loading profile...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const content = document.getElementById('profileContent');
+
+            if (!auth.isAuthenticated) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('logoutButton').addEventListener('click', () => auth.logout());
+
+            if (window.location.hostname.includes('github.io')) {
+                content.innerHTML = '<p style="text-align:center;">Profile feature requires the backend server to be running locally.</p>';
+                return;
+            }
+
+            try {
+                const user = await api.getCurrentUser();
+                content.innerHTML = `
+                    <div style="text-align:center;">
+                        <h2>${user.name}</h2>
+                        <p>${user.email}</p>
+                        <p>Role: ${user.role}</p>
+                    </div>
+                `;
+            } catch (error) {
+                content.innerHTML = '<p style="text-align:center;">Failed to load profile.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

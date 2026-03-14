@@ -24,11 +24,12 @@
             </div>
             <div class="nav-menu" id="navMenu">
                 <a href="index.html" class="nav-link active">Home</a>
-                <a href="#latest-jobs" class="nav-link">Latest Jobs</a>
-                <a href="#admit-cards" class="nav-link">Admit Cards</a>
-                <a href="#results" class="nav-link">Results</a>
+                <a href="category/latest_job.html" class="nav-link">Latest Jobs</a>
+                <a href="category/admit_card.html" class="nav-link">Admit Cards</a>
+                <a href="category/result.html" class="nav-link">Results</a>
                 <div class="nav-divider"></div>
                 <a href="login.html" class="nav-link" id="loginLink">Login</a>
+                <a href="profile.html" class="nav-link hidden" id="profileLink">Profile</a>
                 <a href="admin.html" class="nav-link hidden" id="adminLink">Admin</a>
             </div>
             <button class="nav-toggle" id="navToggle">
@@ -137,6 +138,7 @@
                     <div class="job-column">
                         <div class="job-column-header">
                             <h2>Results</h2>
+                            <a href="category/result.html" class="view-all">View All →</a>
                         </div>
                         <div class="job-list" id="resultsList">
                             <div class="loading">Loading...</div>
@@ -147,6 +149,7 @@
                     <div class="job-column">
                         <div class="job-column-header">
                             <h2>Admit Cards</h2>
+                            <a href="category/admit_card.html" class="view-all">View All →</a>
                         </div>
                         <div class="job-list" id="admitCardsList">
                             <div class="loading">Loading...</div>
@@ -157,11 +160,28 @@
                     <div class="job-column">
                         <div class="job-column-header">
                             <h2>Latest Jobs</h2>
+                            <a href="category/latest_job.html" class="view-all">View All →</a>
                         </div>
                         <div class="job-list" id="latestJobsList">
                             <div class="loading">Loading...</div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Secondary Categories -->
+                <div class="secondary-categories">
+                    <a href="category/answer_key.html" class="category-card">
+                        <h3>Answer Key</h3>
+                    </a>
+                    <a href="category/syllabus.html" class="category-card">
+                        <h3>Syllabus</h3>
+                    </a>
+                    <a href="category/admission.html" class="category-card">
+                        <h3>Admission</h3>
+                    </a>
+                    <a href="category/important.html" class="category-card">
+                        <h3>Important</h3>
+                    </a>
                 </div>
 
                 <!-- About Section -->
@@ -204,14 +224,22 @@
                     <h4>Quick Links</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
-                        <li><a href="admin.html">Admin</a></li>
+                        <li><a href="category/latest_job.html">Latest Jobs</a></li>
+                        <li><a href="category/admit_card.html">Admit Cards</a></li>
+                        <li><a href="category/result.html">Results</a></li>
+                        <li><a href="category/admission.html">Admission</a></li>
+                        <li><a href="category/syllabus.html">Syllabus</a></li>
+                        <li><a href="category/answer_key.html">Answer Key</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>About</h4>
-                    <p>Government Job Hai provides latest updates on government jobs, admit cards, results, and answer keys from official sources.</p>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Newsletter</h4>

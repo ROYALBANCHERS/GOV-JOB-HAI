@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission - Government Job Hai</title>
+    <meta name="description" content="College and university admission notifications.">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Government Job Hai</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="admission.html" class="nav-link active">Admission</a>
+            </div>
+        </div>
+    </nav>
+    <main class="main-content">
+        <div class="container">
+            <h1>Admission Notifications</h1>
+            <div id="jobsList"><div class="loading">Loading...</div></div>
+        </div>
+    </main>
+    <script src="../js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const jobs = await api.getJobs({ category: 'admission' });
+                document.getElementById('jobsList').innerHTML = jobs.length ? jobs.map(j => `<div class="job-card"><h3><a href="../job.html?id=${j.id}">${j.title}</a></h3></div>`).join('') : '<p>No admissions found.</p>';
+            } catch (e) {
+                document.getElementById('jobsList').innerHTML = '<p>Failed to load.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
