@@ -20,6 +20,239 @@
 
     <!-- Google AdSense (Free - Earn from ads) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        /* Apply Banner Section */
+        .apply-banner-section {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .apply-banner {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .apply-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .apply-banner-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .apply-banner-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        .apply-banner-text {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin: 0 0 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+
+        .apply-banner-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: scaleIn 0.5s ease-out 0.6s both;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 0.25rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .apply-banner-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .apply-banner-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .apply-banner-btn.primary {
+            background: #dc2626;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .apply-banner-btn.primary:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+        }
+
+        .apply-banner-btn.secondary {
+            background: white;
+            color: #1e40af;
+        }
+
+        .apply-banner-btn.secondary:hover {
+            background: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(220, 38, 38, 0.5);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .apply-banner {
+                padding: 2rem 1.5rem;
+            }
+
+            .apply-banner-title {
+                font-size: 1.75rem;
+            }
+
+            .apply-banner-text {
+                font-size: 1rem;
+            }
+
+            .apply-banner-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .apply-banner-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .apply-banner-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -137,6 +370,49 @@
                     <div class="marquee">
                         <div class="marquee-content" id="marqueeContent">
                             <!-- Dynamic updates will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prominent Apply Now Banner -->
+        <section class="apply-banner-section">
+            <div class="container">
+                <div class="apply-banner">
+                    <div class="apply-banner-content">
+                        <h2 class="apply-banner-title">🚀 Apply for Government Jobs Today!</h2>
+                        <p class="apply-banner-text">
+                            Don't miss out on latest government job opportunities. Browse through thousands of vacancies across India and apply online now!
+                        </p>
+                        <div class="apply-banner-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">49+</div>
+                                <div class="stat-label">Active Jobs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Organizations</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₹0-500</div>
+                                <div class="stat-label">Application Fee</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">All India</div>
+                                <div class="stat-label">Locations</div>
+                            </div>
+                        </div>
+                        <div class="apply-banner-actions">
+                            <a href="category/latest_job.html" class="apply-banner-btn primary">
+                                📝 Browse Latest Jobs
+                            </a>
+                            <a href="category/admit_card.html" class="apply-banner-btn secondary">
+                                🎫 Download Admit Cards
+                            </a>
+                            <a href="category/result.html" class="apply-banner-btn secondary">
+                                📊 Check Results
+                            </a>
                         </div>
                     </div>
                 </div>
