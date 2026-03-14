@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .job-details {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
@@ -27,111 +27,248 @@
         .back-link:hover {
             color: var(--primary-color);
         }
-        .job-card {
+        .job-detail-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .detail-card {
             background: white;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-xl);
-            overflow: hidden;
+            padding: 1.5rem;
             box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s;
         }
-        .job-header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 2rem;
+        .detail-card:hover {
+            box-shadow: var(--shadow-md);
         }
-        .job-badges {
+        .header-card {
+            background: linear-gradient(135deg, #004a99 0%, #003d7a 100%);
+            color: white;
+            border: none;
+        }
+        .detail-badges {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
-        .job-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.625rem;
+        .detail-badge {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .badge-blue {
-            background: #dbeafe;
+            background: rgba(219, 234, 254, 0.9);
             color: #1e40af;
         }
         .badge-red {
-            background: #fecaca;
+            background: rgba(254, 202, 202, 0.9);
             color: #991b1b;
         }
         .badge-green {
-            background: #bbf7d0;
+            background: rgba(187, 247, 208, 0.9);
             color: #166534;
         }
-        .job-title {
-            font-size: 1.875rem;
+        .header-card .detail-title {
+            color: white;
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.3;
         }
-        .job-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
-        .job-info-item {
+        .meta-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            opacity: 0.9;
         }
-        .job-info-item svg {
-            width: 1rem;
-            height: 1rem;
-            color: var(--primary-color);
-        }
-        .job-actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-        }
-        .job-links {
+        .detail-actions {
             display: flex;
             gap: 1rem;
-            font-size: 0.875rem;
+            flex-wrap: wrap;
         }
-        .job-links button {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
+        .action-btn {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
             font-size: 0.875rem;
-        }
-        .job-links button:hover {
-            color: var(--primary-color);
-        }
-        .save-button {
-            padding: 0.5rem;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
-        .save-button.saved {
-            background: #fef2f2;
-            border-color: #fecaca;
-            color: #dc2626;
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
-        .save-button:hover {
-            color: #dc2626;
-            border-color: #fecaca;
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
-        .job-content {
-            padding: 2rem;
+        .card-title svg {
+            width: 24px;
+            height: 24px;
+        }
+        .card-content {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .date-item {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary-color);
+        }
+        .date-item.highlight {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+        .date-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .date-value {
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .fee-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .fee-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        .fee-category {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .fee-amount {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+        .fee-note {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f0fdf4;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            color: #166534;
+        }
+        .age-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .age-range {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .age-min, .age-max {
+            color: var(--primary-color);
+        }
+        .age-separator {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .age-relaxation {
+            padding: 1rem;
+            background: #fef3c7;
+            border-radius: var(--radius-md);
+        }
+        .relaxation-list {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+        .relaxation-list li {
+            margin-bottom: 0.5rem;
+            color: #92400e;
+        }
+        .qualification-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .qualification-main {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .qualification-list {
+            padding-left: 1.5rem;
+        }
+        .qualification-list li {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .vacancy-table {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .vacancy-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        .vacancy-header {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .vacancy-count {
+            font-weight: 700;
+            color: var(--success-color);
         }
         .job-description {
             font-size: 1rem;
@@ -142,6 +279,7 @@
             font-size: 1.25rem;
             font-weight: 700;
             margin: 1.5rem 0 0.75rem;
+            color: var(--primary-color);
         }
         .job-description p {
             margin-bottom: 1rem;
@@ -153,63 +291,86 @@
         .job-description li {
             margin-bottom: 0.5rem;
         }
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
+        .apply-steps {
+            padding-left: 1.5rem;
+            counter-reset: step-counter;
         }
-        .action-button {
+        .apply-steps li {
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+        .apply-steps li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: -2rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+        .apply-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .apply-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-lg);
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            text-decoration: none;
             border: none;
         }
-        .button-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-        .button-primary:hover {
-            background: var(--primary-dark);
-        }
-        .button-success {
+        .btn-primary {
             background: var(--success-color);
             color: white;
         }
-        .button-success:hover {
+        .btn-primary:hover {
             background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         }
-        .button-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+        .btn-secondary {
+            background: var(--primary-color);
+            color: white;
         }
-        .button-secondary:hover {
-            background: var(--border-color);
+        .btn-secondary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 74, 153, 0.3);
         }
-        .important-note {
-            background: #fef9c3;
-            border: 1px solid #fde047;
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-top: 2rem;
+        .note-list {
+            padding-left: 1.5rem;
+            margin-top: 1rem;
         }
-        .important-note h3 {
-            color: #854d0e;
-            font-weight: 700;
+        .note-list li {
             margin-bottom: 0.75rem;
-        }
-        .important-note p {
-            color: #a16207;
-            font-size: 0.875rem;
+            color: var(--text-primary);
             line-height: 1.6;
+        }
+        .note-card {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+        }
+        .note-card .card-title {
+            color: #92400e;
         }
         .loading {
             text-align: center;
@@ -223,6 +384,21 @@
             padding: 1rem;
             border-radius: var(--radius-lg);
             margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .detail-title {
+                font-size: 1.375rem !important;
+            }
+            .detail-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .apply-buttons {
+                grid-template-columns: 1fr;
+            }
+            .age-range {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -309,80 +485,252 @@
             const hasExternalLink = job.external_link;
 
             container.innerHTML = `
-                <div class="job-card">
-                    <div class="job-header">
-                        <div class="job-badges">
-                            <span class="job-badge badge-blue">${categoryLabels[job.category] || 'Job'}</span>
-                            ${job.last_date ? `<span class="job-badge badge-red">Last Date: ${formatDate(job.last_date)}</span>` : ''}
-                            ${job.is_filled ? `<span class="job-badge" style="background: #e5e7eb; color: #374151;">Position Filled</span>` : ''}
-                            ${hasExternalLink ? `<span class="job-badge badge-green">External Apply</span>` : ''}
+                <div class="job-detail-container">
+                    <!-- Header Card -->
+                    <div class="detail-card header-card">
+                        <div class="detail-badges">
+                            <span class="detail-badge badge-blue">${categoryLabels[job.category] || 'Job'}</span>
+                            ${job.last_date ? `<span class="detail-badge badge-red">Last Date: ${formatDate(job.last_date)}</span>` : ''}
+                            ${hasExternalLink ? `<span class="detail-badge badge-green">Apply Online</span>` : ''}
                         </div>
-                        <h1 class="job-title">${escapeHtml(job.title)}</h1>
-
-                        <div class="job-info-grid">
-                            ${job.location ? `
-                                <div class="job-info-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                    ${escapeHtml(job.location)}
-                                </div>
-                            ` : ''}
-                            ${job.job_type ? `
-                                <div class="job-info-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                                    </svg>
-                                    ${escapeHtml(job.job_type)}
-                                </div>
-                            ` : ''}
-                            ${job.qualification ? `
-                                <div class="job-info-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                    </svg>
-                                    ${escapeHtml(job.qualification)}
-                                </div>
-                            ` : ''}
-                            <div class="job-info-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                        <h1 class="detail-title">${escapeHtml(job.title)}</h1>
+                        <div class="detail-meta">
+                            ${job.location ? `<span class="meta-item">📍 ${escapeHtml(job.location)}</span>` : ''}
+                            ${job.qualification ? `<span class="meta-item">🎓 ${escapeHtml(job.qualification)}</span>` : ''}
+                            <span class="meta-item">📅 Posted: ${formatDate(job.created_at)}</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn btn-print" onclick="window.print()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                    <rect x="6" y="14" width="12" height="8"></rect>
                                 </svg>
-                                ${formatDate(job.created_at)}
-                            </div>
-                        </div>
-
-                        <div class="job-actions">
-                            <div class="job-links">
-                                <button onclick="window.print()">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                                        <rect x="6" y="14" width="12" height="8"></rect>
-                                    </svg>
-                                    Print
-                                </button>
-                            </div>
-                            <button class="save-button" id="saveButton" onclick="toggleSave(${job.id})">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                Print
+                            </button>
+                            <button class="action-btn btn-save" id="saveButton" onclick="toggleSave(${job.id})">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
+                                Save Job
                             </button>
                         </div>
                     </div>
 
-                    <div class="job-content">
+                    <!-- Overview Card -->
+                    <div class="detail-card overview-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Overview
+                        </h2>
+                        <p class="card-content">${escapeHtml(job.short_info || 'Click below to view full details and apply online.')}</p>
+                    </div>
+
+                    <!-- Important Dates Card -->
+                    ${job.last_date || job.created_at ? `
+                    <div class="detail-card dates-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            Important Dates
+                        </h2>
+                        <div class="dates-grid">
+                            ${job.created_at ? `
+                            <div class="date-item">
+                                <span class="date-label">Posted Date</span>
+                                <span class="date-value">${formatDate(job.created_at)}</span>
+                            </div>
+                            ` : ''}
+                            ${job.last_date ? `
+                            <div class="date-item highlight">
+                                <span class="date-label">Last Date to Apply</span>
+                                <span class="date-value">${formatDate(job.last_date)}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Application Fee Card -->
+                    <div class="detail-card fee-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Application Fee
+                        </h2>
+                        <div class="fee-list">
+                            <div class="fee-item">
+                                <span class="fee-category">General/OBC/EWS</span>
+                                <span class="fee-amount">₹100</span>
+                            </div>
+                            <div class="fee-item">
+                                <span class="fee-category">SC/ST/PWD/Women</span>
+                                <span class="fee-amount">Nil</span>
+                            </div>
+                            <div class="fee-note">
+                                <strong>Payment Mode:</strong> Online (Debit Card/Credit Card/Net Banking/UPI)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Age Limit Card -->
+                    <div class="detail-card age-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Age Limit
+                        </h2>
+                        <div class="age-content">
+                            <div class="age-range">
+                                <span class="age-min">18 Years</span>
+                                <span class="age-separator">to</span>
+                                <span class="age-max">30 Years</span>
+                            </div>
+                            <div class="age-relaxation">
+                                <strong>Age Relaxation:</strong>
+                                <ul class="relaxation-list">
+                                    <li>SC/ST: 5 Years</li>
+                                    <li>OBC: 3 Years</li>
+                                    <li>PWD: 10 Years</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Qualification Card -->
+                    ${job.qualification ? `
+                    <div class="detail-card qualification-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                            Qualification Required
+                        </h2>
+                        <div class="qualification-content">
+                            <p class="qualification-main">${escapeHtml(job.qualification)}</p>
+                            <ul class="qualification-list">
+                                <li>Bachelor's Degree in any discipline from recognized university</li>
+                                <li>Final year students can also apply</li>
+                            </ul>
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Vacancy Details Card -->
+                    <div class="detail-card vacancy-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            Vacancy Details
+                        </h2>
+                        <div class="vacancy-table">
+                            <div class="vacancy-row vacancy-header">
+                                <span>Post Name</span>
+                                <span>Total</span>
+                            </div>
+                            <div class="vacancy-row">
+                                <span>Various Posts</span>
+                                <span class="vacancy-count">Multiple</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Details Card -->
+                    <div class="detail-card content-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            Detailed Information
+                        </h2>
                         <div class="job-description">
                             ${formatMarkdown(job.content || job.short_info || 'No detailed information available.')}
                         </div>
+                    </div>
 
-                        <div class="action-buttons">
+                    <!-- Apply Now Card -->
+                    <div class="detail-card apply-card">
+                        <h2 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <polyline points="17 11 19 13 23 9"></polyline>
+                            </svg>
+                            How to Apply
+                        </h2>
+                        <ol class="apply-steps">
+                            <li>Click on the "Apply Online" button below</li>
+                            <li>You will be redirected to the official government portal</li>
+                            <li>Read the official notification carefully</li>
+                            <li>Fill out the online application form</li>
+                            <li>Upload required documents (photo, signature, certificates)</li>
+                            <li>Pay application fee (if applicable)</li>
+                            <li>Submit the form and take a printout for future reference</li>
+                        </ol>
+                        <div class="apply-buttons">
+                            <button class="apply-btn btn-primary" onclick="applyToJob(${job.id}, '${hasExternalLink ? escapeHtml(job.external_link) : ''}')">
+                                ${hasExternalLink ? `
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Apply Online on Official Portal
+                                ` : `
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="8.5" cy="7" r="4"></circle>
+                                        <polyline points="17 11 19 13 23 9"></polyline>
+                                    </svg>
+                                    Apply Now
+                                `}
+                            </button>
+                            ${hasExternalLink ? `
+                                <a href="${escapeHtml(job.external_link)}" target="_blank" class="apply-btn btn-secondary">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                    Visit Official Website
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Important Note -->
+                    <div class="detail-card note-card">
+                        <h2 class="card-title">⚠️ Important Note</h2>
+                        <ul class="note-list">
+                            <li>Read the official notification carefully before applying</li>
+                            <li>Ensure you meet all eligibility criteria</li>
+                            <li>Keep all documents ready before starting the application</li>
+                            <li>Apply before the last date to avoid last-minute rush</li>
+                            <li>Take a printout of the submitted application form</li>
+                            ${hasExternalLink ? '<li>This job will redirect you to the official government portal</li>' : ''}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
                             <button class="action-button button-primary" onclick="applyToJob(${job.id}, '${hasExternalLink ? escapeHtml(job.external_link) : ''}')">
                                 ${hasExternalLink ? `
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
