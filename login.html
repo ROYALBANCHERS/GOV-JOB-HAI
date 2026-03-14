@@ -8,6 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         body {
             background: var(--bg-secondary);
@@ -165,38 +171,50 @@
 
         <!-- Backend Not Available Message -->
         <div id="backendUnavailable" class="info-message">
-            <h3>⚠️ Login Not Available on GitHub Pages</h3>
-            <p><strong>You're currently viewing the static version of our website on GitHub Pages.</strong></p>
-            <p><strong>What works on GitHub Pages:</strong></p>
-            <ul>
-                <li>✅ Browse all government jobs</li>
-                <li>✅ View admit cards & results</li>
-                <li>✅ Read blog articles</li>
-                <li>✅ Search and filter jobs</li>
-            </ul>
-            <p><strong>What requires PHP backend:</strong></p>
-            <ul>
-                <li>❌ Login / Register</li>
-                <li>❌ Admin panel</li>
-                <li>❌ Save jobs to profile</li>
-                <li>❌ Track applications</li>
-            </ul>
-            <p style="margin-top: 1rem;"><strong>🚀 Want Full Features?</strong></p>
-            <p>Choose an option below:</p>
+            <h3>⚠️ Firebase Not Configured</h3>
+            <p><strong>To enable Admin Panel on GitHub Pages, you need to configure Firebase Authentication.</strong></p>
+            <p><strong>Quick Setup (5 minutes):</strong></p>
             <ol style="margin-top: 0.75rem;">
-                <li><a href="index.html">🏠 Go Back to Home</a> - Browse jobs without login</li>
-                <li><a href="README-DEPLOYMENT.md" target="_blank">📖 Read Deployment Guide</a> - Learn how to deploy with full features</li>
-                <li><strong>Run locally:</strong> Follow these steps:
+                <li><strong>Create Firebase Project:</strong>
                     <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                        <li>Download the project</li>
-                        <li>Run: <code>cd backend && composer install</code></li>
-                        <li>Run: <code>php artisan migrate && php artisan db:seed</code></li>
-                        <li>Run: <code>php artisan serve</code></li>
-                        <li>Open: <code>http://localhost:8000</code></li>
-                        <li>Login with: <code>admin@sarkari.com</code> / <code>admin123</code></li>
+                        <li>Go to <a href="https://console.firebase.google.com/" target="_blank">https://console.firebase.google.com/</a></li>
+                        <li>Click "Add project" and follow the setup wizard</li>
+                    </ul>
+                </li>
+                <li><strong>Enable Authentication:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>In Firebase Console, go to Authentication → Sign-in method</li>
+                        <li>Enable "Email/Password" provider</li>
+                    </ul>
+                </li>
+                <li><strong>Enable Realtime Database:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>In Firebase Console, go to Realtime Database</li>
+                        <li>Click "Create Database"</li>
+                        <li>Select "Start in test mode" (for now)</li>
+                    </ul>
+                </li>
+                <li><strong>Get Configuration:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Go to Project Settings → General → Your apps</li>
+                        <li>Click "</>" icon to add web app</li>
+                        <li>Copy the config object</li>
+                        <li>Paste it into <code>js/firebase-config.js</code></li>
+                    </ul>
+                </li>
+                <li><strong>Create Admin User:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Run: <code>node scripts/setup-firebase-admin.js</code></li>
+                        <li>Follow the prompts to create admin credentials</li>
+                        <li>Import the generated JSON into Firebase Realtime Database</li>
                     </ul>
                 </li>
             </ol>
+            <p style="margin-top: 1rem;"><strong>📖 Need Help?</strong></p>
+            <ul style="margin-top: 0.5rem;">
+                <li><a href="index.html">🏠 Go Back to Home</a> - Browse jobs without login</li>
+                <li><a href="README-DEPLOYMENT.md" target="_blank">📖 Read Deployment Guide</a> - Full deployment instructions</li>
+            </ul>
         </div>
 
         <div id="errorMessage" class="error-message hidden"></div>
@@ -250,8 +268,10 @@
         </div>
     </div>
 
+    <script src="js/firebase-config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/firebase-auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('loginForm');
@@ -261,8 +281,11 @@
             const backendUnavailable = document.getElementById('backendUnavailable');
 
             // Check if running on GitHub Pages (static hosting)
-            if (window.location.hostname.includes('github.io')) {
-                // Show backend unavailable message
+            const isGitHubPages = window.location.hostname.includes('github.io');
+            const useFirebase = window.isFirebaseConfigured && window.isFirebaseConfigured();
+
+            if (isGitHubPages && !useFirebase) {
+                // Show backend unavailable message only if Firebase is not configured
                 backendUnavailable.classList.remove('hidden');
                 // Hide login form
                 form.style.display = 'none';
@@ -270,12 +293,20 @@
                 document.querySelector('.auth-links').style.display = 'none';
                 return;
             } else {
-                // Hide backend message if not on GitHub Pages
+                // Hide backend message if not on GitHub Pages or Firebase is configured
                 backendUnavailable.classList.add('hidden');
             }
 
+            // Update title if using Firebase
+            if (useFirebase) {
+                document.querySelector('.auth-title').textContent = 'Admin Panel Login';
+            }
+
             // Check if user is already logged in
-            if (auth.isAuthenticated) {
+            if (useFirebase && window.isFirebaseAuthenticated && window.isFirebaseAuthenticated()) {
+                window.location.href = redirectUrl;
+                return;
+            } else if (!useFirebase && auth.isAuthenticated) {
                 window.location.href = 'index.html';
                 return;
             }
@@ -295,7 +326,14 @@
                 buttonText.innerHTML = '<span class="spinner"></span>Logging in...';
 
                 try {
-                    const result = await auth.login(email, password);
+                    let result;
+
+                    // Use Firebase auth if configured, otherwise use backend API
+                    if (useFirebase) {
+                        result = await window.firebaseLogin(email, password);
+                    } else {
+                        result = await auth.login(email, password);
+                    }
 
                     if (result.success) {
                         // Redirect to the intended page or home
@@ -304,7 +342,10 @@
                         showError(result.error || 'Login failed. Please try again.');
                     }
                 } catch (error) {
-                    showError('An error occurred. Please check if the backend server is running.');
+                    const errorMsg = useFirebase
+                        ? error.message || 'Login failed. Please try again.'
+                        : 'An error occurred. Please check if the backend server is running.';
+                    showError(errorMsg);
                 } finally {
                     submitButton.disabled = false;
                     buttonText.textContent = 'Login';
