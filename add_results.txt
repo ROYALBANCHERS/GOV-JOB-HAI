@@ -1,0 +1,5 @@
+# Add Results and Admit Cards to jobs-data.json
+
+I'll add all the results and admit cards from the user's request to the jobs-data.json file.
+
+Let me first read the current file and then append the new entries.
