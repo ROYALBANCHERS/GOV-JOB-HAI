@@ -57,80 +57,79 @@
             opacity: 0.9;
         }
 
-        /* Sarkari Result Style Tables */
-        .sarkari-table {
+        /* ===== SARKARI RESULT STYLE TABLES ===== */
+
+        /* Main Information Table */
+        .info-table {
             width: 100%;
             border-collapse: collapse;
             margin: 0;
             font-size: 0.875rem;
         }
-        .sarkari-table th,
-        .sarkari-table td {
+        .info-table th,
+        .info-table td {
             border: 1px solid #3b82f6;
             padding: 0.75rem;
             text-align: left;
+            vertical-align: top;
         }
-        .sarkari-table th {
+        .info-table th {
             background: var(--primary-color);
             color: white;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.75rem;
         }
-        .sarkari-table tr:nth-child(even) {
+        .info-table tr:nth-child(even) {
             background: #f3f4f6;
         }
-        .sarkari-table tr:hover {
+        .info-table tr:hover {
             background: #e0f2fe;
         }
-        .sarkari-table .highlight {
-            background: #fef9c3;
+
+        /* Highlight Classes */
+        .highlight {
+            background: #fef9c3 !important;
             color: #92400e;
             font-weight: 600;
         }
-        .sarkari-table .highlight-yellow {
-            background: #fef08a;
+        .highlight-yellow {
+            background: #fef08a !important;
             color: #92400e;
             font-weight: 700;
-            border-left: 3px solid #f59e0b;
+            border-left: 3px solid #f59e0b !important;
         }
-        .sarkari-table .highlight-green {
-            background: #bbf7d0;
+        .highlight-green {
+            background: #bbf7d0 !important;
             color: #166534;
             font-weight: 600;
         }
-
-        /* Important Links */
-        .important-links {
-            padding: 1rem;
-        }
-        .important-link-btn {
-            display: inline-block;
-            background: #fef3c7;
-            color: #92400e;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #f59e0b;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 0.25rem;
-            transition: all 0.2s;
-        }
-        .important-link-btn:hover {
-            background: #fde047;
-            transform: scale(1.02);
+        .highlight-orange {
+            background: #fed7aa !important;
+            color: #9a3412;
+            font-weight: 700;
         }
 
-        /* Section Titles */
-        .section-title {
+        /* Section Headers */
+        .section-header {
             background: var(--primary-color);
             color: white;
             padding: 0.75rem 1rem;
             margin: 0;
             font-weight: 600;
             font-size: 1rem;
+            border-bottom: 2px solid #1e40af;
+        }
+        .section-header-green {
+            background: #16a34a;
+            border-bottom: 2px solid #166534;
+        }
+        .section-header-orange {
+            background: #f59e0b;
+            border-bottom: 2px solid #d97706;
         }
 
+        /* Card Content */
         .card-content {
             padding: 1.5rem;
         }
@@ -173,8 +172,160 @@
             font-size: 0.875rem;
         }
 
+        /* How to Fill Box */
+        .how-to-fill-box {
+            border: 3px solid #3b82f6;
+            background: #f0f9ff;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+        .how-to-fill-box h4 {
+            color: #1e40af;
+            margin: 0 0 1rem 0;
+            font-size: 1.125rem;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+        .how-to-fill-box ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        .how-to-fill-box li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        /* Useful Links Table */
+        .useful-links-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .useful-links-table th {
+            background: #f59e0b;
+            color: white;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border: 1px solid #d97706;
+        }
+        .useful-links-table td {
+            border: 1px solid #f59e0b;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+        }
+        .useful-links-table .link-description {
+            font-weight: 500;
+            color: #1f2937;
+        }
+        .useful-links-table .click-here {
+            text-align: center;
+        }
+        .click-here-btn {
+            display: inline-block;
+            background: #fbbf24;
+            color: #92400e;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #f59e0b;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .click-here-btn:hover {
+            background: #fde047;
+            transform: scale(1.05);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: white;
+            border: 1px solid #ddd;
+            margin: 1.5rem 0;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .faq-answer {
+            color: #4b5563;
+            line-height: 1.6;
+            padding-left: 1rem;
+        }
+
+        /* Floating Social Buttons */
+        .floating-social {
+            position: fixed;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .floating-social.top {
+            top: 200px;
+        }
+        .floating-social.middle {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        .social-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .social-btn.telegram {
+            background: #0088cc;
+            color: white;
+        }
+        .social-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            50% { box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-social {
+                right: 10px;
+            }
+            .social-btn {
+                padding: 10px 12px;
+                font-size: 0.75rem;
+            }
+            .info-table th,
+            .info-table td {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+        }
+
         @media print {
-            .back-link, .detail-actions {
+            .back-link, .floating-social {
                 display: none;
             }
         }
@@ -188,9 +339,9 @@
             </div>
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="index.html" class="nav-link">Latest Jobs</a>
-                <a href="index.html" class="nav-link">Admit Cards</a>
-                <a href="index.html" class="nav-link">Results</a>
+                <a href="category/latest_job.html" class="nav-link">Latest Jobs</a>
+                <a href="category/admit_card.html" class="nav-link">Admit Cards</a>
+                <a href="category/result.html" class="nav-link">Results</a>
             </div>
         </div>
     </nav>
@@ -199,6 +350,22 @@
         <a href="index.html" class="back-link">
             ← Back to Home
         </a>
+
+        <!-- Floating Social Buttons (Top) -->
+        <div class="floating-social top" id="socialTop" style="display: none;">
+            <a href="https://whatsapp.com/channel/your-channel" target="_blank" class="social-btn whatsapp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Join WhatsApp
+            </a>
+            <a href="https://t.me/your-channel" target="_blank" class="social-btn telegram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                Join Telegram
+            </a>
+        </div>
 
         <div id="jobContent">
             <div style="text-align: center; padding: 2rem;">
@@ -241,7 +408,11 @@
             const applyLink = job.apply_link || job.external_link || job.notification_link;
             const notificationLink = job.notification_link || job.external_link;
 
+            // Show floating social buttons
+            document.getElementById('socialTop').style.display = 'flex';
+
             container.innerHTML = `
+                <!-- Header Card -->
                 <div class="detail-card">
                     <div class="detail-header">
                         <h1>${escapeHtml(job.title)} ${statusBadge}</h1>
@@ -249,86 +420,124 @@
                     </div>
                 </div>
 
-                <!-- Important Links Section -->
-                ${applyLink || notificationLink ? `
+                <!-- 1. TABULAR DATA SECTIONS (Information Table) -->
                 <div class="detail-card">
-                    <h3 class="section-title">🔗 Important Links</h3>
-                    <div class="card-content important-links">
-                        ${applyLink ? `<a href="${escapeHtml(applyLink)}" target="_blank" class="important-link-btn">📝 Apply Online</a>` : ''}
-                        ${notificationLink ? `<a href="${escapeHtml(notificationLink)}" target="_blank" class="important-link-btn">📄 Download Notification</a>` : ''}
-                        ${job.official_website ? `<a href="${escapeHtml(job.official_website)}" target="_blank" class="important-link-btn">🌐 Official Website</a>` : ''}
-                    </div>
-                </div>
-                ` : ''}
+                    <table class="info-table">
+                        <!-- Important Dates & Fee in one row -->
+                        <tr>
+                            <th colspan="2" style="background: #1e40af; font-size: 0.875rem; padding: 0.875rem;">
+                                📅 Important Dates & Fee Structure
+                            </th>
+                        </tr>
+                        <tr>
+                            <!-- Left Column: Important Dates -->
+                            <td style="width: 50%; vertical-align: top; padding: 0;">
+                                <table style="width: 100%; border: none; margin: 0;">
+                                    <tr style="background: #dbeafe;">
+                                        <th style="border: none; padding: 0.5rem; background: #3b82f6; color: white;">Important Dates</th>
+                                    </tr>
+                                    ${job.post_date ? `<tr>
+                                        <td style="border: none; padding: 0.5rem; ${job.post_date && job.last_date ? 'border-bottom: 1px solid #e5e7eb;' : ''}">
+                                            <strong style="color: #1e40af;">Begin Date for Apply Online:</strong><br>
+                                            <span class="highlight-yellow">${formatDate(job.post_date)}</span>
+                                        </td>
+                                    </tr>` : ''}
+                                    ${job.last_date ? `<tr>
+                                        <td style="border: none; padding: 0.5rem;">
+                                            <strong style="color: #1e40af;">Last Date for Apply Online:</strong><br>
+                                            <span class="highlight">${formatDate(job.last_date)}</span>
+                                        </td>
+                                    </tr>` : ''}
+                                    ${job.exam_date ? `<tr>
+                                        <td style="border: none; padding: 0.5rem;">
+                                            <strong>Exam Date:</strong><br>
+                                            ${formatDate(job.exam_date)}
+                                        </td>
+                                    </tr>` : ''}
+                                    ${job.admit_card_date ? `<tr>
+                                        <td style="border: none; padding: 0.5rem;">
+                                            <strong>Admit Card Date:</strong><br>
+                                            ${formatDate(job.admit_card_date)}
+                                        </td>
+                                    </tr>` : ''}
+                                </table>
+                            </td>
 
-                <!-- Important Dates Table -->
-                ${job.post_date || job.last_date || job.exam_date || job.admit_card_date ? `
-                <div class="detail-card">
-                    <h3 class="section-title">📅 Important Dates</h3>
-                    <div class="card-content">
-                        <table class="sarkari-table">
-                            <tr>
-                                <th>Event</th>
-                                <th>Date</th>
-                            </tr>
-                            ${job.post_date ? `<tr><td class="highlight-yellow">Begin Date for Apply Online</td><td class="highlight-yellow">${formatDate(job.post_date)}</td></tr>` : ''}
-                            ${job.last_date ? `<tr><td class="highlight">Last Date for Apply Online</td><td class="highlight">${formatDate(job.last_date)}</td></tr>` : ''}
-                            ${job.exam_date ? `<tr><td>Exam Date</td><td>${formatDate(job.exam_date)}</td></tr>` : ''}
-                            ${job.admit_card_date ? `<tr><td>Admit Card Date</td><td>${formatDate(job.admit_card_date)}</td></tr>` : ''}
-                        </table>
-                    </div>
-                </div>
-                ` : ''}
+                            <!-- Right Column: Application Fee -->
+                            <td style="width: 50%; vertical-align: top; padding: 0;">
+                                <table style="width: 100%; border: none; margin: 0;">
+                                    <tr style="background: #fef3c7;">
+                                        <th style="border: none; padding: 0.5rem; background: #f59e0b; color: white;">Application Fee</th>
+                                    </tr>
+                                    ${job.fee_general ? `<tr>
+                                        <td style="border: none; padding: 0.5rem; ${job.fee_sc_st ? 'border-bottom: 1px solid #e5e7eb;' : ''}">
+                                            <strong>General / OBC / EWS:</strong><br>
+                                            <span class="highlight-yellow">${escapeHtml(job.fee_general)}</span>
+                                        </td>
+                                    </tr>` : ''}
+                                    ${job.fee_sc_st ? `<tr>
+                                        <td style="border: none; padding: 0.5rem;">
+                                            <strong>SC / ST / PWD / Women:</strong><br>
+                                            <span class="highlight">${escapeHtml(job.fee_sc_st)}</span>
+                                        </td>
+                                    </tr>` : ''}
+                                    ${job.fee_payment_mode ? `<tr>
+                                        <td style="border: none; padding: 0.5rem;">
+                                            <strong>Payment Mode:</strong><br>
+                                            ${escapeHtml(job.fee_payment_mode)}
+                                        </td>
+                                    </tr>` : ''}
+                                </table>
+                            </td>
+                        </tr>
 
-                <!-- Application Fee Table -->
-                ${job.fee_general || job.fee_sc_st || job.fee_payment_mode ? `
-                <div class="detail-card">
-                    <h3 class="section-title">💰 Application Fee</h3>
-                    <div class="card-content">
-                        <table class="sarkari-table">
-                            <tr>
-                                <th>Category</th>
-                                <th>Fee</th>
-                            </tr>
-                            ${job.fee_general ? `<tr><td>General / OBC / EWS</td><td class="highlight-yellow">${escapeHtml(job.fee_general)}</td></tr>` : ''}
-                            ${job.fee_sc_st ? `<tr><td>SC / ST / PWD / Women</td><td class="highlight">${escapeHtml(job.fee_sc_st)}</td></tr>` : ''}
-                            ${job.fee_payment_mode ? `<tr><td><strong>Payment Mode</strong></td><td>${escapeHtml(job.fee_payment_mode)}</td></tr>` : ''}
-                        </table>
-                    </div>
+                        <!-- Age Limit & Total Post (Wide Row) -->
+                        ${(job.age_min || job.age_max || job.vacancy_count) ? `
+                        <tr>
+                            <td colspan="2" style="padding: 0.75rem; background: #f0fdf4;">
+                                <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                                    ${job.age_min || job.age_max ? `
+                                    <div style="flex: 1; min-width: 250px;">
+                                        <h4 style="margin: 0 0 0.5rem 0; color: #16a34a; font-size: 1rem; border-bottom: 2px solid #16a34a; padding-bottom: 0.25rem;">
+                                            👤 Age Limit
+                                        </h4>
+                                        <div style="background: white; padding: 0.75rem; border: 2px solid #16a34a; border-radius: 0.25rem;">
+                                            <p style="margin: 0.25rem 0;"><strong>Minimum Age:</strong> <span class="highlight-green">${job.age_min || 'N/A'} Years</span></p>
+                                            <p style="margin: 0.25rem 0;"><strong>Maximum Age:</strong> <span class="highlight-green">${job.age_max || 'N/A'} Years</span></p>
+                                            ${job.age_relaxation ? `<p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: #166534;"><strong>Age Relaxation:</strong><br>${escapeHtml(job.age_relaxation).replace(/\\n/g, '<br>')}</p>` : ''}
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                    ${job.vacancy_count ? `
+                                    <div style="flex: 1; min-width: 250px;">
+                                        <h4 style="margin: 0 0 0.5rem 0; color: #d97706; font-size: 1rem; border-bottom: 2px solid #d97706; padding-bottom: 0.25rem;">
+                                            📊 Total Vacancy
+                                        </h4>
+                                        <div style="background: white; padding: 0.75rem; border: 2px solid #f59e0b; border-radius: 0.25rem; text-align: center;">
+                                            <p style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #d97706;">${job.vacancy_count}</p>
+                                            <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #92400e;">Posts</p>
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </td>
+                        </tr>
+                        ` : ''}
+                    </table>
                 </div>
-                ` : ''}
 
-                <!-- Age Limit -->
-                ${job.age_min || job.age_max || job.age_relaxation ? `
+                <!-- 2. DETAILED VACANCY & ELIGIBILITY -->
+                ${job.vacancy_details || job.qualification ? `
                 <div class="detail-card">
-                    <h3 class="section-title">👤 Age Limit (as on ${job.post_date ? formatDate(job.post_date) : 'as per notification'})</h3>
+                    ${job.vacancy_details ? `
+                    <h3 class="section-header section-header-green">📊 Vacancy Details</h3>
                     <div class="card-content">
-                        <table class="sarkari-table">
+                        <table class="vacancy-table">
                             <tr>
-                                <th>Category</th>
-                                <th>Age Limit</th>
+                                <th style="width: 70%;">Post Name</th>
+                                <th style="width: 30%;">Number of Posts</th>
                             </tr>
-                            ${job.age_min || job.age_max ? `<tr><td class="highlight-yellow">Minimum Age</td><td class="highlight-yellow">${job.age_min || 'N/A'} Years</td></tr>` : ''}
-                            ${job.age_min || job.age_max ? `<tr><td class="highlight-yellow">Maximum Age</td><td class="highlight-yellow">${job.age_max || 'N/A'} Years</td></tr>` : ''}
-                            ${job.age_relaxation ? `<tr><td colspan="2"><strong>Age Relaxation:</strong><br>${escapeHtml(job.age_relaxation).replace(/\n/g, '<br>')}</td></tr>` : ''}
-                        </table>
-                    </div>
-                </div>
-                ` : ''}
-
-                <!-- Vacancy Details -->
-                ${job.vacancy_details || job.vacancy_count ? `
-                <div class="detail-card">
-                    <h3 class="section-title">📊 Vacancy Details</h3>
-                    <div class="card-content">
-                        ${job.vacancy_count ? `<p style="font-size: 1rem; margin-bottom: 1rem;"><strong>Total Vacancies:</strong> <span class="highlight">${job.vacancy_count} Posts</span></p>` : ''}
-                        ${job.vacancy_details ? `
-                        <table class="sarkari-table">
-                            <tr>
-                                <th>Post Name</th>
-                                <th>Vacancies</th>
-                            </tr>
-                            ${escapeHtml(job.vacancy_details).split('\n').map(line => {
+                            ${escapeHtml(job.vacancy_details).split('\\n').map(line => {
                                 const parts = line.split(/[-–]/);
                                 if (parts.length >= 2) {
                                     return `<tr><td>${parts[0].trim()}</td><td class="highlight">${parts[1].trim()}</td></tr>`;
@@ -336,71 +545,173 @@
                                 return '';
                             }).join('')}
                         </table>
-                        ` : ''}
                     </div>
-                </div>
-                ` : ''}
+                    ` : ''}
 
-                <!-- Qualification -->
-                ${job.qualification ? `
-                <div class="detail-card">
-                    <h3 class="section-title">🎓 Eligibility</h3>
+                    ${job.qualification ? `
+                    <h3 class="section-header section-header-green">🎓 Eligibility Criteria</h3>
                     <div class="card-content">
-                        <p><strong>Qualification:</strong> <span class="highlight">${escapeHtml(job.qualification)}</span></p>
+                        <table class="vacancy-table">
+                            <tr>
+                                <th style="width: 30%;">Requirement</th>
+                                <th style="width: 70%;">Details</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Qualification</strong></td>
+                                <td>${escapeHtml(job.qualification)}</td>
+                            </tr>
+                            ${job.age_min ? `<tr>
+                                <td><strong>Age Limit</strong></td>
+                                <td>${job.age_min} - ${job.age_max} Years</td>
+                            </tr>` : ''}
+                            ${job.nationality ? `<tr>
+                                <td><strong>Nationality</strong></td>
+                                <td>${escapeHtml(job.nationality)}</td>
+                            </tr>` : '<tr><td><strong>Nationality</strong></td><td>Indian</td></tr>'}
+                        </table>
+                    </div>
+                    ` : ''}
+                </div>
+                ` : ''}
+
+                <!-- 3. STEP-BY-STEP INSTRUCTION BOX -->
+                ${applyLink ? `
+                <div class="detail-card">
+                    <h3 class="section-header">📝 How to Fill Online Form</h3>
+                    <div class="card-content">
+                        <div class="how-to-fill-box">
+                            <h4>Steps to Apply Online / आवेदन करने के चरण:</h4>
+                            <ol>
+                                <li><strong>Visit Official Website:</strong> Click on the "Apply Online" link given below to visit the official website.<br>
+                                <span style="color: #4b5563;">आधिकारिक वेबसाइट पर जाएं: नीचे दिए गए "Apply Online" लिंक पर क्लिक करें।</span></li>
+
+                                <li><strong>Read Notification:</strong> Download and read the official notification carefully before applying.<br>
+                                <span style="color: #4b5563;">अधिसूचना पढ़ें: आवेदन करने से पहले आधिकारिक अधिसूचना ध्यान से पढ़ें।</span></li>
+
+                                <li><strong>Click on Apply Online:</strong> Find and click on the "Apply Online" or "Registration" link on the website.<br>
+                                <span style="color: #4b5563;">ऑनलाइन आवेदन करें: वेबसाइट पर "Apply Online" या "Registration" लिंक पर क्लिक करें।</span></li>
+
+                                <li><strong>Fill Application Form:</strong> Enter all required details correctly in the application form (Personal, Educational, Contact).<br>
+                                <span style="color: #4b5563;">आवेदन पत्र भरें: आवेदन पत्र में सभी आवश्यक विवरण सही ढंग से भरें।</span></li>
+
+                                <li><strong>Upload Documents:</strong> Upload scanned copies of photo, signature, and required documents.<br>
+                                <span style="color: #4b5563;">दस्तावेज़ अपलोड करें: फोटो, हस्ताक्षर और आवश्यक दस्तावेजों की स्कैन कॉपी अपलोड करें।</span></li>
+
+                                <li><strong>Pay Application Fee:</strong> Pay the required application fee online using Debit Card, Credit Card, Net Banking, or UPI.<br>
+                                <span style="color: #4b5563;">आवेदन शुल्क भुगतान करें: डेबिट कार्ड, क्रेडिट कार्ड, नेट बैंकिंग या UPI के माध्यम से शुल्क का भुगतान करें।</span></li>
+
+                                <li><strong>Review & Submit:</strong> Review all details carefully and submit the application form.<br>
+                                <span style="color: #4b5563;">समीक्षा और जमा करें: सभी विवरणों की सावधानीपूर्वक समीक्षा करें और आवेदन जमा करें।</span></li>
+
+                                <li><strong>Print Application:</strong> Take a printout of the submitted application form for future reference.<br>
+                                <span style="color: #4b5563;">आवेदन की प्रिंट आउट लें: भविष्य के संदर्भ के लिए जमा किए गए आवेदन पत्र की प्रिंट आउट लें।</span></li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
                 ` : ''}
 
-                <!-- Selection Process -->
+                <!-- 4. USEFUL LINKS SECTION (Call to Action) -->
+                <div class="detail-card">
+                    <h3 class="section-header section-header-orange">🔗 Some Useful Important Links</h3>
+                    <div class="card-content">
+                        <table class="useful-links-table">
+                            <tr>
+                                <th style="width: 70%;">Description</th>
+                                <th style="width: 30%; text-align: center;">Action</th>
+                            </tr>
+                            ${applyLink ? `<tr>
+                                <td class="link-description">📝 Apply Online</td>
+                                <td class="click-here">
+                                    <a href="${escapeHtml(applyLink)}" target="_blank" class="click-here-btn">Click Here</a>
+                                </td>
+                            </tr>` : ''}
+                            ${notificationLink ? `<tr>
+                                <td class="link-description">📄 Download Official Notification</td>
+                                <td class="click-here">
+                                    <a href="${escapeHtml(notificationLink)}" target="_blank" class="click-here-btn">Click Here</a>
+                                </td>
+                            </tr>` : ''}
+                            ${job.official_website ? `<tr>
+                                <td class="link-description">🌐 Visit Official Website</td>
+                                <td class="click-here">
+                                    <a href="${escapeHtml(job.official_website)}" target="_blank" class="click-here-btn">Click Here</a>
+                                </td>
+                            </tr>` : ''}
+                            <tr>
+                                <td class="link-description">🔔 Join Our Telegram Channel</td>
+                                <td class="click-here">
+                                    <a href="https://t.me/your-channel" target="_blank" class="click-here-btn">Click Here</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="link-description">📱 Join Our WhatsApp Group</td>
+                                <td class="click-here">
+                                    <a href="https://whatsapp.com/channel/your-channel" target="_blank" class="click-here-btn">Click Here</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
                 ${job.selection_process ? `
                 <div class="detail-card">
-                    <h3 class="section-title">✅ Selection Process</h3>
+                    <h3 class="section-header">✅ Selection Process</h3>
                     <div class="card-content">
                         <p style="white-space: pre-wrap;">${escapeHtml(job.selection_process)}</p>
                     </div>
                 </div>
                 ` : ''}
 
-                <!-- Documents Required -->
                 ${job.documents_required ? `
                 <div class="detail-card">
-                    <h3 class="section-title">📎 Documents Required</h3>
+                    <h3 class="section-header">📎 Documents Required</h3>
                     <div class="card-content">
                         <p style="white-space: pre-wrap;">${escapeHtml(job.documents_required)}</p>
                     </div>
                 </div>
                 ` : ''}
 
-                <!-- Important Notes -->
-                ${job.important_notes || job.content ? `
-                <div class="detail-card">
-                    <h3 class="section-title">📝 Important Instructions</h3>
-                    <div class="card-content">
-                        <p style="white-space: pre-wrap;">${escapeHtml(job.important_notes || job.content || '')}</p>
-                    </div>
-                </div>
-                ` : ''}
+                <!-- 5. FAQ SECTION -->
+                <div class="faq-section">
+                    <h3 class="section-header">❓ Frequently Asked Questions (FAQ)</h3>
 
-                <!-- How to Apply -->
-                ${applyLink ? `
-                <div class="detail-card">
-                    <h3 class="section-title">🚀 How to Apply</h3>
-                    <div class="card-content important-links">
-                        <p><strong>Steps to Apply:</strong></p>
-                        <ol style="margin-top: 1rem;">
-                            <li>Click on "Apply Online" button given below</li>
-                            <li>You will be redirected to the official website</li>
-                            <li>Read the official notification carefully</li>
-                            <li>Fill all the required details in the application form</li>
-li>Upload required documents</li>
-                            <li>Pay application fee (if required)</li>
-                            <li>Submit the form and take a printout</li>
-                        </ol>
-                        <br>
-                        <a href="${escapeHtml(applyLink)}" target="_blank" class="important-link-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">📝 Apply Online Now</a>
+                    <div class="faq-item">
+                        <div class="faq-question">Q1: What is the last date to apply for ${escapeHtml(job.title)}?</div>
+                        <div class="faq-answer">
+                            <strong>Answer:</strong> The last date to apply online is ${job.last_date ? formatDate(job.last_date) : 'as per notification'}. Candidates are advised to apply well before the deadline to avoid last-minute rush.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q2: What is the application fee for General/OBC candidates?</div>
+                        <div class="faq-answer">
+                            <strong>Answer:</strong> The application fee for General/OBC/EWS candidates is ${job.fee_general || 'as per notification'}. SC/ST/PWD/Women candidates need to pay ${job.fee_sc_st || 'Nil'}.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q3: What is the age limit to apply for this post?</div>
+                        <div class="faq-answer">
+                            <strong>Answer:</strong> The minimum age is ${job.age_min || 'as per notification'} years and maximum age is ${job.age_max || 'as per notification'} years. Age relaxation is applicable as per government rules for SC/ST/OBC/PWD candidates.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q4: What is the qualification required for this post?</div>
+                        <div class="faq-answer">
+                            <strong>Answer:</strong> Candidates should have ${job.qualification || 'qualification as per notification'}. For detailed qualification requirements, please refer to the official notification.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Q5: How can I apply for this post?</div>
+                        <div class="faq-answer">
+                            <strong>Answer:</strong> Eligible candidates can apply online through the official website. Click on the "Apply Online" link given in the Important Links section above. Read the notification carefully and fill all required details.
+                        </div>
                     </div>
                 </div>
-                ` : ''}
 
                 <!-- Footer Info -->
                 <div class="detail-card">
@@ -408,6 +719,9 @@ li>Upload required documents</li>
                         <p><strong>Posted Date:</strong> ${formatDate(job.created_at)}</p>
                         ${job.location ? `<p><strong>Location:</strong> ${escapeHtml(job.location)}</p>` : ''}
                         ${job.external_link ? `<p><strong>Official Source:</strong> <a href="${escapeHtml(job.external_link)}" target="_blank">Click Here</a></p>` : ''}
+                        <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; font-size: 0.875rem; color: #6b7280;">
+                            ⚠️ <strong>Disclaimer:</strong> Please verify all information from the official website before applying. We are not responsible for any errors or changes in the recruitment process.
+                        </p>
                     </div>
                 </div>
             `;
@@ -415,13 +729,13 @@ li>Upload required documents</li>
 
         function detectStatusBadge(title) {
             const titleLower = title.toLowerCase();
-            if (title.includes('new') || title.includes('start') || title.includes('begins')) {
+            if (titleLower.includes('new') || titleLower.includes('start') || titleLower.includes('begins')) {
                 return '<span class="status-badge status-new">NEW</span>';
-            } else if (title.includes('updated') || title.includes('revised') || title.includes('extended')) {
+            } else if (titleLower.includes('updated') || titleLower.includes('revised') || titleLower.includes('extended')) {
                 return '<span class="status-badge status-updated">UPDATED</span>';
-            } else if (title.includes('soon') || title.includes('upcoming')) {
+            } else if (titleLower.includes('soon') || titleLower.includes('upcoming')) {
                 return '<span class="status-badge" style="background: #f59e0b; color: white;">SOON</span>';
-            } else if (title.includes('out') || title.includes('released') || title.includes('declared')) {
+            } else if (titleLower.includes('out') || titleLower.includes('released') || titleLower.includes('declared')) {
                 return '<span class="status-badge" style="background: #22c55e; color: white;">OUT</span>';
             }
             return '';
@@ -445,7 +759,7 @@ li>Upload required documents</li>
                 <div class="detail-card">
                     <div style="padding: 2rem; text-align: center;">
                         <p style="font-size: 1.125rem; color: var(--danger-color);">❌ ${message}</p>
-                        <a href="index.html" class="important-link-btn" style="margin-top: 1rem;">← Go Back to Home</a>
+                        <a href="index.html" class="click-here-btn" style="margin-top: 1rem;">← Go Back to Home</a>
                     </div>
                 </div>
             `;
