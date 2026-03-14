@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admission - Government Job Hai</title>
-    <meta name="description" content="College and university admission notifications.">
+    <meta name="description" content="College and university admission notifications, entrance exam dates, and application forms for various courses.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        .badge-teal {
+            background: #ccfbf1;
+            color: #0f766e;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -13,28 +34,189 @@
             <div class="nav-brand">
                 <h1>Government Job Hai</h1>
             </div>
-            <div class="nav-menu">
+            <div class="nav-menu" id="navMenu">
                 <a href="../index.html" class="nav-link">Home</a>
+                <a href="latest_job.html" class="nav-link">Latest Jobs</a>
+                <a href="admit_card.html" class="nav-link">Admit Cards</a>
+                <a href="result.html" class="nav-link">Results</a>
                 <a href="admission.html" class="nav-link active">Admission</a>
+                <a href="../blog/" class="nav-link">Blog</a>
+                <div class="nav-divider"></div>
+                <a href="../login.html" class="nav-link" id="loginLink">Login</a>
+                <a href="../profile.html" class="nav-link hidden" id="profileLink">Profile</a>
+                <a href="../admin.html" class="nav-link hidden" id="adminLink">Admin</a>
             </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Ad Space -->
+    <div class="container">
+        <div id="ad-header" class="ad-container"></div>
+    </div>
+
     <main class="main-content">
         <div class="container">
-            <h1>Admission Notifications</h1>
-            <div id="jobsList"><div class="loading">Loading...</div></div>
+            <div class="category-header">
+                <h1>Admission Notifications</h1>
+                <p>College and university admission notifications, entrance exams, and application forms</p>
+            </div>
+
+            <section class="search-section">
+                <div class="search-box">
+                    <form id="searchForm">
+                        <div class="search-row">
+                            <input type="text" id="searchInput" placeholder="Search admissions..." class="search-input">
+                            <button type="submit" class="search-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="jobs-section">
+                <div class="jobs-list" id="jobsList">
+                    <div class="loading">Loading admissions...</div>
+                </div>
+            </section>
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>GOVERNMENT JOB HAI</h3>
+                    <p>India's #1 portal for admission updates.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="latest_job.html">Latest Jobs</a></li>
+                        <li><a href="admit_card.html">Admit Cards</a></li>
+                        <li><a href="result.html">Results</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>More</h4>
+                    <ul class="footer-links">
+                        <li><a href="answer_key.html">Answer Key</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="../blog/">Blog</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/adsense-config.js"></script>
     <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                const jobs = await api.getJobs({ category: 'admission' });
-                document.getElementById('jobsList').innerHTML = jobs.length ? jobs.map(j => `<div class="job-card"><h3><a href="../job.html?id=${j.id}">${j.title}</a></h3></div>`).join('') : '<p>No admissions found.</p>';
-            } catch (e) {
-                document.getElementById('jobsList').innerHTML = '<p>Failed to load.</p>';
+            const jobsList = document.getElementById('jobsList');
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+
+            let allJobs = [];
+
+            async function loadJobs() {
+                try {
+                    jobsList.innerHTML = '<div class="loading">Loading admissions...</div>';
+                    allJobs = await api.getJobs({ category: 'admission' });
+                    displayJobs(allJobs);
+                } catch (error) {
+                    jobsList.innerHTML = '<div class="error">Failed to load admissions. Please try again later.</div>';
+                }
             }
+
+            function displayJobs(jobs) {
+                if (jobs.length === 0) {
+                    jobsList.innerHTML = '<div class="no-results">No admissions found matching your criteria.</div>';
+                    return;
+                }
+
+                jobsList.innerHTML = jobs.map(job => `
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-badges">
+                                <span class="job-badge badge-teal">Admission</span>
+                            </div>
+                            <h3 class="job-title">
+                                <a href="../job.html?id=${job.id}">${escapeHtml(job.title)}</a>
+                            </h3>
+                            <div class="job-meta">
+                                <span class="job-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    ${formatDate(job.created_at)}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="job-body">
+                            <p class="job-description">${escapeHtml(job.short_info || '')}</p>
+                        </div>
+                        <div class="job-footer">
+                            <a href="../job.html?id=${job.id}" class="job-link">View Details →</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function filterJobs() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let filtered = allJobs;
+
+                if (searchTerm) {
+                    filtered = filtered.filter(job =>
+                        job.title.toLowerCase().includes(searchTerm) ||
+                        (job.short_info && job.short_info.toLowerCase().includes(searchTerm))
+                    );
+                }
+
+                displayJobs(filtered);
+            }
+
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                filterJobs();
+            });
+
+            searchInput.addEventListener('input', filterJobs);
+
+            await loadJobs();
         });
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
     </script>
 </body>
 </html>
