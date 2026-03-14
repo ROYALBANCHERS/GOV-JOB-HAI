@@ -4,47 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admit Cards - Government Job Hai</title>
-    <meta name="description" content="Download admit cards for government exams and recruitment tests.">
+    <meta name="description" content="Download admit cards for government exams - SSC, UPSC, Railway, Banking, and other recruitment tests.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Firebase SDK (Free Tier - Spark Plan) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+    <!-- Google AdSense (Free - Earn from ads) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        .admit-cards-section {
+            padding: 2rem 0;
+        }
+        .category-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .category-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .category-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        .badge-green {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .badge-orange {
+            background: #fed7aa;
+            color: #9a3412;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
                 <h1>Government Job Hai</h1>
-                <span class="nav-tagline">Latest Government Jobs</span>
             </div>
             <div class="nav-menu" id="navMenu">
                 <a href="../index.html" class="nav-link">Home</a>
                 <a href="latest_job.html" class="nav-link">Latest Jobs</a>
                 <a href="admit_card.html" class="nav-link active">Admit Cards</a>
                 <a href="result.html" class="nav-link">Results</a>
+                <a href="../blog/" class="nav-link">Blog</a>
                 <div class="nav-divider"></div>
                 <a href="../login.html" class="nav-link" id="loginLink">Login</a>
+                <a href="../profile.html" class="nav-link hidden" id="profileLink">Profile</a>
                 <a href="../admin.html" class="nav-link hidden" id="adminLink">Admin</a>
             </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
+    <!-- Ad Space -->
+    <div class="container">
+        <div id="ad-header" class="ad-container"></div>
+    </div>
+
     <main class="main-content">
         <div class="container">
-            <section class="category-header">
+            <div class="category-header">
                 <h1>Admit Cards</h1>
                 <p>Download admit cards for upcoming government examinations</p>
-            </section>
+            </div>
 
             <section class="search-section">
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search admit cards..." class="search-input">
+                    <form id="searchForm">
+                        <div class="search-row">
+                            <input type="text" id="searchInput" placeholder="Search admit cards by exam name..." class="search-input">
+                            <button type="submit" class="search-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                Search
+                            </button>
+                        </div>
+                        <div class="filter-row">
+                            <select id="locationFilter" class="filter-select">
+                                <option value="">All Locations</option>
+                                <option value="All India">All India</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                            </select>
+                            <select id="statusFilter" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="Out">Released</option>
+                                <option value="Soon">Coming Soon</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </section>
 
             <section class="jobs-section">
                 <div class="jobs-list" id="jobsList">
-                    <div class="loading">Loading...</div>
+                    <div class="loading">Loading admit cards...</div>
                 </div>
             </section>
         </div>
@@ -52,52 +133,156 @@
 
     <footer class="footer">
         <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>GOVERNMENT JOB HAI</h3>
+                    <p>India's #1 portal for admit card updates.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="latest_job.html">Latest Jobs</a></li>
+                        <li><a href="admit_card.html">Admit Cards</a></li>
+                        <li><a href="result.html">Results</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Important Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="answer_key.html">Answer Key</a></li>
+                        <li><a href="syllabus.html">Syllabus</a></li>
+                        <li><a href="../blog/">Blog</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/adsense-config.js"></script>
     <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             const jobsList = document.getElementById('jobsList');
+            const searchForm = document.getElementById('searchForm');
             const searchInput = document.getElementById('searchInput');
+            const locationFilter = document.getElementById('locationFilter');
+            const statusFilter = document.getElementById('statusFilter');
+
             let allJobs = [];
 
+            // Load jobs
             async function loadJobs() {
                 try {
+                    jobsList.innerHTML = '<div class="loading">Loading admit cards...</div>';
                     allJobs = await api.getJobs({ category: 'admit_card' });
                     displayJobs(allJobs);
                 } catch (error) {
-                    jobsList.innerHTML = '<div class="error">Failed to load admit cards.</div>';
+                    jobsList.innerHTML = '<div class="error">Failed to load admit cards. Please try again later.</div>';
                 }
             }
 
+            // Display jobs
             function displayJobs(jobs) {
                 if (jobs.length === 0) {
-                    jobsList.innerHTML = '<div class="no-results">No admit cards found.</div>';
+                    jobsList.innerHTML = '<div class="no-results">No admit cards found matching your criteria.</div>';
                     return;
                 }
+
                 jobsList.innerHTML = jobs.map(job => `
                     <div class="job-card">
                         <div class="job-header">
-                            <span class="job-badge badge-green">Admit Card</span>
-                            <h3><a href="../job.html?id=${job.id}">${escapeHtml(job.title)}</a></h3>
-                            <p>${formatDate(job.created_at)}</p>
+                            <div class="job-badges">
+                                ${job.title.includes('Out') || job.title.includes('Released') || job.title.includes('Available')
+                                    ? '<span class="job-badge badge-green">Available Now</span>'
+                                    : '<span class="job-badge badge-orange">Coming Soon</span>'}
+                                <span class="job-badge badge-blue">Admit Card</span>
+                            </div>
+                            <h3 class="job-title">
+                                <a href="../job.html?id=${job.id}">${escapeHtml(job.title)}</a>
+                            </h3>
+                            <div class="job-meta">
+                                ${job.location ? `<span class="job-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    ${escapeHtml(job.location)}
+                                </span>` : ''}
+                                <span class="job-meta-item">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    ${formatDate(job.created_at)}
+                                </span>
+                            </div>
                         </div>
-                        <p>${escapeHtml(job.short_info || '')}</p>
-                        <a href="../job.html?id=${job.id}" class="job-link">Download Admit Card →</a>
+                        <div class="job-body">
+                            <p class="job-description">${escapeHtml(job.short_info || '')}</p>
+                        </div>
+                        <div class="job-footer">
+                            <a href="../job.html?id=${job.id}" class="job-link">Download Admit Card →</a>
+                        </div>
                     </div>
                 `).join('');
             }
 
-            searchInput.addEventListener('input', () => {
-                const term = searchInput.value.toLowerCase();
-                const filtered = allJobs.filter(j => j.title.toLowerCase().includes(term));
+            // Filter jobs
+            function filterJobs() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const location = locationFilter.value;
+                const status = statusFilter.value;
+
+                let filtered = allJobs;
+
+                if (searchTerm) {
+                    filtered = filtered.filter(job =>
+                        job.title.toLowerCase().includes(searchTerm) ||
+                        (job.short_info && job.short_info.toLowerCase().includes(searchTerm))
+                    );
+                }
+
+                if (location) {
+                    filtered = filtered.filter(job => job.location === location);
+                }
+
+                if (status === 'Out') {
+                    filtered = filtered.filter(job =>
+                        job.title.includes('Out') ||
+                        job.title.includes('Released') ||
+                        job.title.includes('Available')
+                    );
+                } else if (status === 'Soon') {
+                    filtered = filtered.filter(job =>
+                        !job.title.includes('Out') &&
+                        !job.title.includes('Released') &&
+                        !job.title.includes('Available')
+                    );
+                }
+
                 displayJobs(filtered);
+            }
+
+            // Event listeners
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                filterJobs();
             });
 
+            searchInput.addEventListener('input', filterJobs);
+            locationFilter.addEventListener('change', filterJobs);
+            statusFilter.addEventListener('change', filterJobs);
+
+            // Initial load
             await loadJobs();
         });
 
@@ -109,7 +294,8 @@
 
         function formatDate(dateString) {
             if (!dateString) return '';
-            return new Date(dateString).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
         }
     </script>
 </body>
