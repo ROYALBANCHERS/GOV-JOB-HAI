@@ -731,46 +731,6 @@
                 </div>
             `;
         }
-                            <button class="action-button button-primary" onclick="applyToJob(${job.id}, '${hasExternalLink ? escapeHtml(job.external_link) : ''}')">
-                                ${hasExternalLink ? `
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    Apply on Official Portal
-                                ` : 'Apply Online Now'}
-                            </button>
-                            ${hasExternalLink ? `
-                                <button class="action-button button-success" onclick="window.open('${escapeHtml(job.external_link)}', '_blank')">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    Visit Official Website
-                                </button>
-                            ` : ''}
-                            <button class="action-button button-secondary">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                                Download Notification
-                            </button>
-                        </div>
-
-                        <div class="important-note">
-                            <h3>Important Note:</h3>
-                            <p>${hasExternalLink
-                                ? 'This job will redirect you to the official government portal. Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.'
-                                : 'Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.'}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
 
         async function applyToJob(jobId, externalLink) {
             // If there's an external link, redirect directly
