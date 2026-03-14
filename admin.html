@@ -429,6 +429,23 @@
                     <div class="loading">Loading jobs...</div>
                 </div>
             </div>
+
+            <!-- Blogs Management -->
+            <div class="jobs-management" style="margin-top: 2rem;">
+                <div class="section-header">
+                    <div class="search-box">
+                        <h2 class="section-title">Manage Blogs</h2>
+                        <input type="text" id="blogSearchInput" class="search-input" placeholder="Search blogs..." onkeyup="filterBlogs()">
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="refresh-button" onclick="loadBlogs()">🔄 Refresh</button>
+                        <button class="add-button" onclick="openBlogModal()">+ Add New Blog</button>
+                    </div>
+                </div>
+                <div id="blogsTableContainer">
+                    <div class="loading">Loading blogs...</div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -652,6 +669,85 @@
         </div>
     </div>
 
+    <!-- Add/Edit Blog Modal -->
+    <div class="modal" id="blogModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="blogModalTitle">Add New Blog</h3>
+                <button class="modal-close" onclick="closeBlogModal()">&times;</button>
+            </div>
+            <form id="blogForm">
+                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                    <input type="hidden" id="blogId">
+                    <div class="form-grid">
+                        <div class="form-group form-full">
+                            <label for="blogTitle">Blog Title *</label>
+                            <input type="text" id="blogTitle" name="title" required placeholder="e.g., How to Prepare for SSC CGL">
+                        </div>
+                        <div class="form-group">
+                            <label for="blogSlug">Slug (URL) *</label>
+                            <input type="text" id="blogSlug" name="slug" required placeholder="e.g., how-to-prepare-for-ssc-cgl">
+                        </div>
+                        <div class="form-group">
+                            <label for="blogCategory">Category *</label>
+                            <select id="blogCategory" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Exam Tips">Exam Tips</option>
+                                <option value="Career Guidance">Career Guidance</option>
+                                <option value="Banking">Banking</option>
+                                <option value="SSC">SSC</option>
+                                <option value="Railway">Railway</option>
+                                <option value="Teaching">Teaching</option>
+                                <option value="Defence">Defence</option>
+                                <option value="UPSC">UPSC</option>
+                                <option value="Study Tips">Study Tips</option>
+                                <option value="Interview Tips">Interview Tips</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="blogAuthor">Author *</label>
+                            <input type="text" id="blogAuthor" name="author" required placeholder="e.g., GovJob Hai Team">
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="blogImage">Image URL *</label>
+                            <input type="url" id="blogImage" name="image" required placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label for="blogReadTime">Read Time</label>
+                            <input type="text" id="blogReadTime" name="read_time" placeholder="e.g., 5 min read">
+                        </div>
+                        <div class="form-group">
+                            <label for="blogStatus">Status</label>
+                            <select id="blogStatus" name="status" required>
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="blogFeatured">Featured Post</label>
+                            <select id="blogFeatured" name="featured">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="blogExcerpt">Excerpt *</label>
+                            <textarea id="blogExcerpt" name="excerpt" required placeholder="Brief summary for blog listing" style="min-height: 80px;"></textarea>
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="blogContent">Content * (Supports Markdown)</label>
+                            <textarea id="blogContent" name="content" required placeholder="Write your blog content here...&#10;&#10;## Heading 2&#10;### Heading 3&#10;- Bullet point&#10;- Another point&#10;&#10;**Bold text** and *italic text*" style="min-height: 400px; font-family: monospace;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-button button-cancel" onclick="closeBlogModal()">Cancel</button>
+                    <button type="submit" class="modal-button button-save">Save Blog</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
@@ -673,6 +769,7 @@
             await checkBackendAvailability();
             await loadStats();
             await loadJobs();
+            await loadBlogs();
 
             // Show backend status warning
             if (!isBackendAvailable) {
@@ -1022,6 +1119,166 @@
                 setTimeout(() => toast.remove(), 300);
             }, 5000);
         }
+
+        // ===== BLOG MANAGEMENT =====
+        let blogs = [];
+
+        async function loadBlogs() {
+            const container = document.getElementById('blogsTableContainer');
+            try {
+                container.innerHTML = '<div class="loading">Loading blogs...</div>';
+                blogs = await api.getBlogs();
+                renderBlogsTable(blogs);
+            } catch (error) {
+                container.innerHTML = '<div class="error">Failed to load blogs. Please try again.</div>';
+            }
+        }
+
+        function renderBlogsTable(blogsList) {
+            const container = document.getElementById('blogsTableContainer');
+
+            if (blogsList.length === 0) {
+                container.innerHTML = '<div style="padding: 2rem; text-align: center;">No blogs found.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Featured</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${blogsList.map(blog => `
+                                <tr>
+                                    <td>${blog.id}</td>
+                                    <td>
+                                        <div style="font-weight: 600;">${escapeHtml(blog.title)}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(blog.slug)}</div>
+                                    </td>
+                                    <td><span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem;">${escapeHtml(blog.category)}</span></td>
+                                    <td>
+                                        <span style="background: ${blog.status === 'published' ? '#bbf7d0' : '#fef3c7'}; color: ${blog.status === 'published' ? '#166534' : '#92400e'}; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">
+                                            ${blog.status}
+                                        </span>
+                                    </td>
+                                    <td>${blog.featured ? '⭐' : '-'}</td>
+                                    <td>${formatDate(blog.created_at)}</td>
+                                    <td>
+                                        <button class="action-btn view-btn" onclick="viewBlog(${blog.id})" title="View">👁️</button>
+                                        <button class="action-btn edit-btn" onclick="editBlog(${blog.id})" title="Edit">✏️</button>
+                                        <button class="action-btn delete-btn" onclick="deleteBlog(${blog.id})" title="Delete">🗑️</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function filterBlogs() {
+            const searchTerm = document.getElementById('blogSearchInput').value.toLowerCase();
+            const filtered = blogs.filter(blog =>
+                blog.title.toLowerCase().includes(searchTerm) ||
+                blog.category.toLowerCase().includes(searchTerm) ||
+                blog.slug.toLowerCase().includes(searchTerm)
+            );
+            renderBlogsTable(filtered);
+        }
+
+        function openBlogModal() {
+            document.getElementById('blogModalTitle').textContent = 'Add New Blog';
+            document.getElementById('blogForm').reset();
+            document.getElementById('blogId').value = '';
+            document.getElementById('blogModal').style.display = 'flex';
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blogModal').style.display = 'none';
+        }
+
+        async function editBlog(id) {
+            const blog = blogs.find(b => b.id === id);
+            if (!blog) return;
+
+            document.getElementById('blogModalTitle').textContent = 'Edit Blog';
+            document.getElementById('blogId').value = blog.id;
+            document.getElementById('blogTitle').value = blog.title;
+            document.getElementById('blogSlug').value = blog.slug;
+            document.getElementById('blogCategory').value = blog.category;
+            document.getElementById('blogAuthor').value = blog.author;
+            document.getElementById('blogImage').value = blog.image;
+            document.getElementById('blogReadTime').value = blog.read_time || '';
+            document.getElementById('blogStatus').value = blog.status;
+            document.getElementById('blogFeatured').value = blog.featured ? 'true' : 'false';
+            document.getElementById('blogExcerpt').value = blog.excerpt;
+            document.getElementById('blogContent').value = blog.content;
+
+            document.getElementById('blogModal').style.display = 'flex';
+        }
+
+        function viewBlog(id) {
+            window.open(`blog/blog-post.html?id=${id}`, '_blank');
+        }
+
+        async function deleteBlog(id) {
+            if (!confirm('Are you sure you want to delete this blog?')) return;
+
+            try {
+                await api.deleteBlog(id);
+                showMessage('✅ Blog deleted successfully!');
+                await loadBlogs();
+            } catch (error) {
+                showMessage('❌ Failed to delete blog: ' + (error.message || 'Unknown error'));
+            }
+        }
+
+        // Handle blog form submission
+        document.getElementById('blogForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!isBackendAvailable) {
+                showMessage('⚠️ Cannot save: Backend server is not running.');
+                return;
+            }
+
+            const blogId = document.getElementById('blogId').value;
+            const formData = {
+                title: document.getElementById('blogTitle').value,
+                slug: document.getElementById('blogSlug').value,
+                category: document.getElementById('blogCategory').value,
+                author: document.getElementById('blogAuthor').value,
+                image: document.getElementById('blogImage').value,
+                read_time: document.getElementById('blogReadTime').value,
+                status: document.getElementById('blogStatus').value,
+                featured: document.getElementById('blogFeatured').value === 'true',
+                excerpt: document.getElementById('blogExcerpt').value,
+                content: document.getElementById('blogContent').value
+            };
+
+            try {
+                if (blogId) {
+                    await api.updateBlog(blogId, formData);
+                    showMessage('✅ Blog updated successfully!');
+                } else {
+                    await api.createBlog(formData);
+                    showMessage('✅ Blog created successfully!');
+                }
+                closeBlogModal();
+                await loadBlogs();
+            } catch (error) {
+                showMessage('❌ Failed to save blog: ' + (error.message || 'Unknown error'));
+            }
+        });
     </script>
 </body>
 </html>

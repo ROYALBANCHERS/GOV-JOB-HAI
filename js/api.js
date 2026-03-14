@@ -191,6 +191,53 @@ class API {
     async getAnalytics() {
         return this.get('/admin/analytics');
     }
+
+    // ===== Blog Methods =====
+    async getBlogs(params = {}) {
+        try {
+            return await this.get('/blogs', params);
+        } catch (error) {
+            console.log('Backend unavailable, loading static blog data...');
+            return this.loadStaticBlogs();
+        }
+    }
+
+    async getBlog(id) {
+        try {
+            return await this.get(`/blogs/${id}`);
+        } catch (error) {
+            console.log('Backend unavailable, loading blog from static data...');
+            const blogs = await this.loadStaticBlogs();
+            const blog = blogs.find(b => b.id == id);
+            if (!blog) throw new Error('Blog not found');
+            return blog;
+        }
+    }
+
+    // Load static blog data for GitHub Pages
+    async loadStaticBlogs() {
+        try {
+            const response = await fetch('blogs-data.json');
+            if (!response.ok) throw new Error('Failed to load static blog data');
+            const blogs = await response.json();
+            return blogs;
+        } catch (error) {
+            console.error('Failed to load static blogs:', error);
+            throw new Error('Unable to load blogs. Please check your internet connection.');
+        }
+    }
+
+    async createBlog(blogData) {
+        return this.post('/admin/blogs', blogData);
+    }
+
+    async updateBlog(id, blogData) {
+        return this.put(`/admin/blogs/${id}`, blogData);
+    }
+
+    async deleteBlog(id) {
+        return this.delete(`/admin/blogs/${id}`);
+    }
 }
 
 // ===== Initialize API =====
