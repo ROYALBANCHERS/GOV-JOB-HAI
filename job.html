@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Job Details - Government Job Hai</title>
-    <meta name="description" content="Government Job Hai provides latest updates on government jobs, admit cards, results, and admission notifications in India.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,400 +17,170 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
     <style>
+        body {
+            background: #f5f5f5;
+        }
         .job-details {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-secondary);
+            color: var(--primary-color);
             text-decoration: none;
             margin-bottom: 1.5rem;
+            font-weight: 600;
             font-size: 0.875rem;
-        }
-        .back-link:hover {
-            color: var(--primary-color);
-        }
-        .job-detail-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
         }
         .detail-card {
             background: white;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s;
-        }
-        .detail-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-        .header-card {
-            background: linear-gradient(135deg, #004a99 0%, #003d7a 100%);
-            color: white;
-            border: none;
-        }
-        .detail-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .detail-badge {
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .badge-blue {
-            background: rgba(219, 234, 254, 0.9);
-            color: #1e40af;
-        }
-        .badge-red {
-            background: rgba(254, 202, 202, 0.9);
-            color: #991b1b;
-        }
-        .badge-green {
-            background: rgba(187, 247, 208, 0.9);
-            color: #166534;
-        }
-        .header-card .detail-title {
-            color: white;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-        .detail-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+            border: 1px solid #ddd;
             margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-        .detail-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+        .detail-header {
+            background: var(--primary-color);
             color: white;
-        }
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .card-title svg {
-            width: 24px;
-            height: 24px;
-        }
-        .card-content {
-            color: var(--text-primary);
-            line-height: 1.8;
-        }
-        .dates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        .date-item {
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            border-left: 4px solid var(--primary-color);
-        }
-        .date-item.highlight {
-            background: #fef3c7;
-            border-left-color: #f59e0b;
-        }
-        .date-label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-        .date-value {
-            display: block;
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .fee-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .fee-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-        }
-        .fee-category {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        .fee-amount {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--success-color);
-        }
-        .fee-note {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: #f0fdf4;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            color: #166534;
-        }
-        .age-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .age-range {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
             padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        .detail-header h1 {
+            margin: 0;
             font-size: 1.5rem;
             font-weight: 700;
         }
-        .age-min, .age-max {
-            color: var(--primary-color);
+        .detail-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
         }
-        .age-separator {
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-        .age-relaxation {
-            padding: 1rem;
-            background: #fef3c7;
-            border-radius: var(--radius-md);
-        }
-        .relaxation-list {
-            margin-top: 0.5rem;
-            padding-left: 1.5rem;
-        }
-        .relaxation-list li {
-            margin-bottom: 0.5rem;
-            color: #92400e;
-        }
-        .qualification-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .qualification-main {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        .qualification-list {
-            padding-left: 1.5rem;
-        }
-        .qualification-list li {
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        .vacancy-table {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .vacancy-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-        }
-        .vacancy-header {
-            background: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-        .vacancy-count {
-            font-weight: 700;
-            color: var(--success-color);
-        }
-        .job-description {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-        }
-        .job-description h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 1.5rem 0 0.75rem;
-            color: var(--primary-color);
-        }
-        .job-description p {
-            margin-bottom: 1rem;
-        }
-        .job-description ul, .job-description ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .job-description li {
-            margin-bottom: 0.5rem;
-        }
-        .apply-steps {
-            padding-left: 1.5rem;
-            counter-reset: step-counter;
-        }
-        .apply-steps li {
-            margin-bottom: 1rem;
-            padding-left: 0.5rem;
-            position: relative;
-            color: var(--text-primary);
-        }
-        .apply-steps li::before {
-            counter-increment: step-counter;
-            content: counter(step-counter);
-            position: absolute;
-            left: -2rem;
-            top: 0;
-            width: 1.5rem;
-            height: 1.5rem;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+
+        /* Sarkari Result Style Tables */
+        .sarkari-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
             font-size: 0.875rem;
         }
-        .apply-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+        .sarkari-table th,
+        .sarkari-table td {
+            border: 1px solid #3b82f6;
+            padding: 0.75rem;
+            text-align: left;
         }
-        .apply-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-lg);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            border: none;
-        }
-        .btn-primary {
-            background: var(--success-color);
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-        }
-        .btn-secondary {
+        .sarkari-table th {
             background: var(--primary-color);
             color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
         }
-        .btn-secondary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 74, 153, 0.3);
+        .sarkari-table tr:nth-child(even) {
+            background: #f3f4f6;
         }
-        .note-list {
-            padding-left: 1.5rem;
-            margin-top: 1rem;
+        .sarkari-table tr:hover {
+            background: #e0f2fe;
         }
-        .note-list li {
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-        .note-card {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-        }
-        .note-card .card-title {
+        .sarkari-table .highlight {
+            background: #fef9c3;
             color: #92400e;
+            font-weight: 600;
         }
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
+        .sarkari-table .highlight-yellow {
+            background: #fef08a;
+            color: #92400e;
+            font-weight: 700;
+            border-left: 3px solid #f59e0b;
         }
-        .error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
+        .sarkari-table .highlight-green {
+            background: #bbf7d0;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* Important Links */
+        .important-links {
             padding: 1rem;
-            border-radius: var(--radius-lg);
-            margin-bottom: 1.5rem;
         }
-        @media (max-width: 768px) {
-            .detail-title {
-                font-size: 1.375rem !important;
-            }
-            .detail-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .apply-buttons {
-                grid-template-columns: 1fr;
-            }
-            .age-range {
-                font-size: 1.25rem;
+        .important-link-btn {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #f59e0b;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.25rem;
+            transition: all 0.2s;
+        }
+        .important-link-btn:hover {
+            background: #fde047;
+            transform: scale(1.02);
+        }
+
+        /* Section Titles */
+        .section-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1rem;
+            margin: 0;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+        .status-new {
+            background: #dc2626;
+            color: white;
+        }
+        .status-updated {
+            background: #16a34a;
+            color: white;
+        }
+
+        /* Vacancy Table */
+        .vacancy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .vacancy-table th {
+            background: #16a34a;
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            border: 1px solid #15803d;
+        }
+        .vacancy-table td {
+            border: 1px solid #16a34a;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        @media print {
+            .back-link, .detail-actions {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
@@ -419,51 +188,31 @@
             </div>
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="login.html" class="nav-link" id="loginLink">Login</a>
-                <a href="profile.html" class="nav-link hidden" id="profileLink">Profile</a>
-                <a href="admin.html" class="nav-link hidden" id="adminLink">Admin</a>
+                <a href="index.html" class="nav-link">Latest Jobs</a>
+                <a href="index.html" class="nav-link">Admit Cards</a>
+                <a href="index.html" class="nav-link">Results</a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="job-details">
-        <!-- Ad Space -->
-        <div id="ad-job-detail" class="ad-container"></div>
-
+    <div class="job-details">
         <a href="index.html" class="back-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back to Home
+            ← Back to Home
         </a>
 
         <div id="jobContent">
-            <div class="loading">
+            <div style="text-align: center; padding: 2rem;">
                 <div class="spinner"></div>
                 <p>Loading job details...</p>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
     <script src="js/firebase-config.js"></script>
     <script src="js/adsense-config.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            // Get job ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const jobId = urlParams.get('id');
 
@@ -473,7 +222,6 @@
             }
 
             try {
-                // Fetch job details
                 const job = await api.getJob(jobId);
                 renderJobDetails(job);
             } catch (error) {
@@ -486,469 +234,221 @@
             const container = document.getElementById('jobContent');
             document.getElementById('pageTitle').textContent = job.title + ' - Government Job Hai';
 
-            const categoryLabels = {
-                'latest_job': 'Latest Job',
-                'admit_card': 'Admit Card',
-                'result': 'Result',
-                'answer_key': 'Answer Key',
-                'syllabus': 'Syllabus',
-                'admission': 'Admission'
-            };
+            // Auto-detect status badge
+            const statusBadge = detectStatusBadge(job.title);
 
-            const applyLink = job.apply_link || job.external_link;
-            const hasApplyLink = applyLink;
+            // Apply link
+            const applyLink = job.apply_link || job.external_link || job.notification_link;
+            const notificationLink = job.notification_link || job.external_link;
 
-            let html = `
-                <div class="job-detail-container">
-                    <!-- Header Card -->
-                    <div class="detail-card header-card">
-                        <div class="detail-badges">
-                            <span class="detail-badge badge-blue">${categoryLabels[job.category] || 'Job'}</span>
-                            ${job.last_date ? `<span class="detail-badge badge-red">Last Date: ${formatDate(job.last_date)}</span>` : ''}
-                            ${hasApplyLink ? `<span class="detail-badge badge-green">Apply Online</span>` : ''}
-                            ${job.vacancy_count ? `<span class="detail-badge badge-green">Total Vacancies: ${job.vacancy_count}</span>` : ''}
-                        </div>
-                        <h1 class="detail-title">${escapeHtml(job.title)}</h1>
-                        <div class="detail-meta">
-                            ${job.location ? `<span class="meta-item">📍 ${escapeHtml(job.location)}</span>` : ''}
-                            ${job.qualification ? `<span class="meta-item">🎓 ${escapeHtml(job.qualification)}</span>` : ''}
-                            <span class="meta-item">📅 Posted: ${formatDate(job.created_at)}</span>
-                        </div>
-                        <div class="detail-actions">
-                            <button class="action-btn btn-print" onclick="window.print()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                                    <rect x="6" y="14" width="12" height="8"></rect>
-                                </svg>
-                                Print
-                            </button>
-                            <button class="action-btn btn-save" id="saveButton" onclick="toggleSave(${job.id})">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                </svg>
-                                Save Job
-                            </button>
-                        </div>
+            container.innerHTML = `
+                <div class="detail-card">
+                    <div class="detail-header">
+                        <h1>${escapeHtml(job.title)} ${statusBadge}</h1>
+                        <p>${job.short_info || ''}</p>
                     </div>
+                </div>
 
-                    <!-- Overview Card -->
-                    <div class="detail-card overview-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            Overview
-                        </h2>
-                        <p class="card-content">${escapeHtml(job.short_info || 'Click below to view full details and apply online.')}</p>
+                <!-- Important Links Section -->
+                ${applyLink || notificationLink ? `
+                <div class="detail-card">
+                    <h3 class="section-title">🔗 Important Links</h3>
+                    <div class="card-content important-links">
+                        ${applyLink ? `<a href="${escapeHtml(applyLink)}" target="_blank" class="important-link-btn">📝 Apply Online</a>` : ''}
+                        ${notificationLink ? `<a href="${escapeHtml(notificationLink)}" target="_blank" class="important-link-btn">📄 Download Notification</a>` : ''}
+                        ${job.official_website ? `<a href="${escapeHtml(job.official_website)}" target="_blank" class="important-link-btn">🌐 Official Website</a>` : ''}
                     </div>
-            `;
+                </div>
+                ` : ''}
 
-            // Important Dates Card (only if there are dates)
-            if (job.last_date || job.created_at || job.exam_date || job.admit_card_date) {
-                html += `
-                    <div class="detail-card dates-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            Important Dates
-                        </h2>
-                        <div class="dates-grid">
-                            ${job.created_at ? `
-                            <div class="date-item">
-                                <span class="date-label">Posted Date</span>
-                                <span class="date-value">${formatDate(job.created_at)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.post_date ? `
-                            <div class="date-item">
-                                <span class="date-label">Start Date</span>
-                                <span class="date-value">${formatDate(job.post_date)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.last_date ? `
-                            <div class="date-item highlight">
-                                <span class="date-label">Last Date to Apply</span>
-                                <span class="date-value">${formatDate(job.last_date)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.exam_date ? `
-                            <div class="date-item highlight">
-                                <span class="date-label">Exam Date</span>
-                                <span class="date-value">${formatDate(job.exam_date)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.admit_card_date ? `
-                            <div class="date-item">
-                                <span class="date-label">Admit Card Date</span>
-                                <span class="date-value">${formatDate(job.admit_card_date)}</span>
-                            </div>
-                            ` : ''}
-                        </div>
+                <!-- Important Dates Table -->
+                ${job.post_date || job.last_date || job.exam_date || job.admit_card_date ? `
+                <div class="detail-card">
+                    <h3 class="section-title">📅 Important Dates</h3>
+                    <div class="card-content">
+                        <table class="sarkari-table">
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                            </tr>
+                            ${job.post_date ? `<tr><td class="highlight-yellow">Begin Date for Apply Online</td><td class="highlight-yellow">${formatDate(job.post_date)}</td></tr>` : ''}
+                            ${job.last_date ? `<tr><td class="highlight">Last Date for Apply Online</td><td class="highlight">${formatDate(job.last_date)}</td></tr>` : ''}
+                            ${job.exam_date ? `<tr><td>Exam Date</td><td>${formatDate(job.exam_date)}</td></tr>` : ''}
+                            ${job.admit_card_date ? `<tr><td>Admit Card Date</td><td>${formatDate(job.admit_card_date)}</td></tr>` : ''}
+                        </table>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Application Fee Card (only if fee information exists)
-            if (job.fee_general || job.fee_sc_st || job.fee_payment_mode) {
-                html += `
-                    <div class="detail-card fee-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                <line x1="1" y1="10" x2="23" y2="10"></line>
-                            </svg>
-                            Application Fee
-                        </h2>
-                        <div class="fee-list">
-                            ${job.fee_general ? `
-                            <div class="fee-item">
-                                <span class="fee-category">General/OBC/EWS</span>
-                                <span class="fee-amount">${escapeHtml(job.fee_general)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.fee_sc_st ? `
-                            <div class="fee-item">
-                                <span class="fee-category">SC/ST/PWD/Women</span>
-                                <span class="fee-amount">${escapeHtml(job.fee_sc_st)}</span>
-                            </div>
-                            ` : ''}
-                            ${job.fee_payment_mode ? `
-                            <div class="fee-note">
-                                <strong>Payment Mode:</strong> ${escapeHtml(job.fee_payment_mode)}
-                            </div>
-                            ` : ''}
-                        </div>
+                <!-- Application Fee Table -->
+                ${job.fee_general || job.fee_sc_st || job.fee_payment_mode ? `
+                <div class="detail-card">
+                    <h3 class="section-title">💰 Application Fee</h3>
+                    <div class="card-content">
+                        <table class="sarkari-table">
+                            <tr>
+                                <th>Category</th>
+                                <th>Fee</th>
+                            </tr>
+                            ${job.fee_general ? `<tr><td>General / OBC / EWS</td><td class="highlight-yellow">${escapeHtml(job.fee_general)}</td></tr>` : ''}
+                            ${job.fee_sc_st ? `<tr><td>SC / ST / PWD / Women</td><td class="highlight">${escapeHtml(job.fee_sc_st)}</td></tr>` : ''}
+                            ${job.fee_payment_mode ? `<tr><td><strong>Payment Mode</strong></td><td>${escapeHtml(job.fee_payment_mode)}</td></tr>` : ''}
+                        </table>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Age Limit Card (only if age information exists)
-            if (job.age_min || job.age_max || job.age_relaxation) {
-                html += `
-                    <div class="detail-card age-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            Age Limit
-                        </h2>
-                        <div class="age-content">
-                            ${job.age_min || job.age_max ? `
-                            <div class="age-range">
-                                <span class="age-min">${escapeHtml(job.age_min || 'N/A')}</span>
-                                <span class="age-separator">to</span>
-                                <span class="age-max">${escapeHtml(job.age_max || 'N/A')}</span>
-                            </div>
-                            ` : ''}
-                            ${job.age_relaxation ? `
-                            <div class="age-relaxation">
-                                <strong>Age Relaxation:</strong>
-                                <div style="margin-top: 0.5rem; white-space: pre-wrap;">${escapeHtml(job.age_relaxation)}</div>
-                            </div>
-                            ` : ''}
-                        </div>
+                <!-- Age Limit -->
+                ${job.age_min || job.age_max || job.age_relaxation ? `
+                <div class="detail-card">
+                    <h3 class="section-title">👤 Age Limit (as on ${job.post_date ? formatDate(job.post_date) : 'as per notification'})</h3>
+                    <div class="card-content">
+                        <table class="sarkari-table">
+                            <tr>
+                                <th>Category</th>
+                                <th>Age Limit</th>
+                            </tr>
+                            ${job.age_min || job.age_max ? `<tr><td class="highlight-yellow">Minimum Age</td><td class="highlight-yellow">${job.age_min || 'N/A'} Years</td></tr>` : ''}
+                            ${job.age_min || job.age_max ? `<tr><td class="highlight-yellow">Maximum Age</td><td class="highlight-yellow">${job.age_max || 'N/A'} Years</td></tr>` : ''}
+                            ${job.age_relaxation ? `<tr><td colspan="2"><strong>Age Relaxation:</strong><br>${escapeHtml(job.age_relaxation).replace(/\n/g, '<br>')}</td></tr>` : ''}
+                        </table>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Qualification Card
-            if (job.qualification) {
-                html += `
-                    <div class="detail-card qualification-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                            </svg>
-                            Qualification Required
-                        </h2>
-                        <div class="qualification-content">
-                            <p class="qualification-main">${escapeHtml(job.qualification)}</p>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Vacancy Details Card
-            if (job.vacancy_details || job.vacancy_count) {
-                html += `
-                    <div class="detail-card vacancy-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                            Vacancy Details
-                            ${job.vacancy_count ? `<span style="margin-left: auto; color: var(--success-color); font-weight: 700;">Total: ${job.vacancy_count}</span>` : ''}
-                        </h2>
+                <!-- Vacancy Details -->
+                ${job.vacancy_details || job.vacancy_count ? `
+                <div class="detail-card">
+                    <h3 class="section-title">📊 Vacancy Details</h3>
+                    <div class="card-content">
+                        ${job.vacancy_count ? `<p style="font-size: 1rem; margin-bottom: 1rem;"><strong>Total Vacancies:</strong> <span class="highlight">${job.vacancy_count} Posts</span></p>` : ''}
                         ${job.vacancy_details ? `
-                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.vacancy_details)}</div>
+                        <table class="sarkari-table">
+                            <tr>
+                                <th>Post Name</th>
+                                <th>Vacancies</th>
+                            </tr>
+                            ${escapeHtml(job.vacancy_details).split('\n').map(line => {
+                                const parts = line.split(/[-–]/);
+                                if (parts.length >= 2) {
+                                    return `<tr><td>${parts[0].trim()}</td><td class="highlight">${parts[1].trim()}</td></tr>`;
+                                }
+                                return '';
+                            }).join('')}
+                        </table>
                         ` : ''}
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Selection Process Card
-            if (job.selection_process) {
-                html += `
-                    <div class="detail-card content-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            Selection Process
-                        </h2>
-                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.selection_process)}</div>
+                <!-- Qualification -->
+                ${job.qualification ? `
+                <div class="detail-card">
+                    <h3 class="section-title">🎓 Eligibility</h3>
+                    <div class="card-content">
+                        <p><strong>Qualification:</strong> <span class="highlight">${escapeHtml(job.qualification)}</span></p>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Documents Required Card
-            if (job.documents_required) {
-                html += `
-                    <div class="detail-card content-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                            Documents Required
-                        </h2>
-                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.documents_required)}</div>
+                <!-- Selection Process -->
+                ${job.selection_process ? `
+                <div class="detail-card">
+                    <h3 class="section-title">✅ Selection Process</h3>
+                    <div class="card-content">
+                        <p style="white-space: pre-wrap;">${escapeHtml(job.selection_process)}</p>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Full Details Card
-            if (job.content) {
-                html += `
-                    <div class="detail-card content-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                            </svg>
-                            Detailed Information
-                        </h2>
-                        <div class="job-description">
-                            ${formatMarkdown(job.content)}
-                        </div>
+                <!-- Documents Required -->
+                ${job.documents_required ? `
+                <div class="detail-card">
+                    <h3 class="section-title">📎 Documents Required</h3>
+                    <div class="card-content">
+                        <p style="white-space: pre-wrap;">${escapeHtml(job.documents_required)}</p>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Important Notes Card
-            if (job.important_notes) {
-                html += `
-                    <div class="detail-card note-card">
-                        <h2 class="card-title">📝 Important Notes</h2>
-                        <div style="white-space: pre-wrap; line-height: 1.8;">${escapeHtml(job.important_notes)}</div>
+                <!-- Important Notes -->
+                ${job.important_notes || job.content ? `
+                <div class="detail-card">
+                    <h3 class="section-title">📝 Important Instructions</h3>
+                    <div class="card-content">
+                        <p style="white-space: pre-wrap;">${escapeHtml(job.important_notes || job.content || '')}</p>
                     </div>
-                `;
-            }
+                </div>
+                ` : ''}
 
-            // Apply Now Card
-            html += `
-                    <div class="detail-card apply-card">
-                        <h2 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="8.5" cy="7" r="4"></circle>
-                                <polyline points="17 11 19 13 23 9"></polyline>
-                            </svg>
-                            How to Apply
-                        </h2>
-                        <ol class="apply-steps">
-                            <li>Click on the "Apply Online" button below</li>
-                            <li>You will be redirected to the official government portal</li>
+                <!-- How to Apply -->
+                ${applyLink ? `
+                <div class="detail-card">
+                    <h3 class="section-title">🚀 How to Apply</h3>
+                    <div class="card-content important-links">
+                        <p><strong>Steps to Apply:</strong></p>
+                        <ol style="margin-top: 1rem;">
+                            <li>Click on "Apply Online" button given below</li>
+                            <li>You will be redirected to the official website</li>
                             <li>Read the official notification carefully</li>
-                            <li>Fill out the online application form</li>
-                            <li>Upload required documents (photo, signature, certificates)</li>
-                            <li>Pay application fee (if applicable)</li>
-                            <li>Submit the form and take a printout for future reference</li>
+                            <li>Fill all the required details in the application form</li>
+li>Upload required documents</li>
+                            <li>Pay application fee (if required)</li>
+                            <li>Submit the form and take a printout</li>
                         </ol>
-                        <div class="apply-buttons">
-                            ${hasApplyLink ? `
-                            <button class="apply-btn btn-primary" onclick="window.open('${escapeHtml(applyLink)}', '_blank')">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Apply Online on Official Portal
-                            </button>
-                            ` : `
-                            <button class="apply-btn btn-primary" onclick="applyToJob(${job.id}, '')">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <polyline points="17 11 19 13 23 9"></polyline>
-                                </svg>
-                                Apply Now
-                            </button>
-                            `}
-                            ${job.notification_link ? `
-                            <a href="${escapeHtml(job.notification_link)}" target="_blank" class="apply-btn btn-secondary">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                </svg>
-                                Download Notification
-                            </a>
-                            ` : ''}
-                            ${job.official_website ? `
-                            <a href="${escapeHtml(job.official_website)}" target="_blank" class="apply-btn btn-secondary">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                </svg>
-                                Visit Official Website
-                            </a>
-                            ` : ''}
-                        </div>
+                        <br>
+                        <a href="${escapeHtml(applyLink)}" target="_blank" class="important-link-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">📝 Apply Online Now</a>
                     </div>
+                </div>
+                ` : ''}
 
-                    <!-- Important Note -->
-                    <div class="detail-card note-card">
-                        <h2 class="card-title">⚠️ Important Note</h2>
-                        <ul class="note-list">
-                            <li>Read the official notification carefully before applying</li>
-                            <li>Ensure you meet all eligibility criteria</li>
-                            <li>Keep all documents ready before starting the application</li>
-                            <li>Apply before the last date to avoid last-minute rush</li>
-                            <li>Take a printout of the submitted application form</li>
-                            ${hasApplyLink ? '<li>This job will redirect you to the official government portal</li>' : ''}
-                        </ul>
+                <!-- Footer Info -->
+                <div class="detail-card">
+                    <div class="card-content">
+                        <p><strong>Posted Date:</strong> ${formatDate(job.created_at)}</p>
+                        ${job.location ? `<p><strong>Location:</strong> ${escapeHtml(job.location)}</p>` : ''}
+                        ${job.external_link ? `<p><strong>Official Source:</strong> <a href="${escapeHtml(job.external_link)}" target="_blank">Click Here</a></p>` : ''}
                     </div>
                 </div>
             `;
-
-            container.innerHTML = html;
         }
 
-        async function applyToJob(jobId, externalLink) {
-            // If there's an external link, redirect directly
-            if (externalLink) {
-                window.open(externalLink, '_blank');
-                showMessage('Redirecting to official government portal...');
-                return;
+        function detectStatusBadge(title) {
+            const titleLower = title.toLowerCase();
+            if (title.includes('new') || title.includes('start') || title.includes('begins')) {
+                return '<span class="status-badge status-new">NEW</span>';
+            } else if (title.includes('updated') || title.includes('revised') || title.includes('extended')) {
+                return '<span class="status-badge status-updated">UPDATED</span>';
+            } else if (title.includes('soon') || title.includes('upcoming')) {
+                return '<span class="status-badge" style="background: #f59e0b; color: white;">SOON</span>';
+            } else if (title.includes('out') || title.includes('released') || title.includes('declared')) {
+                return '<span class="status-badge" style="background: #22c55e; color: white;">OUT</span>';
             }
-
-            // Otherwise, check authentication and record application
-            if (!auth.isAuthenticated) {
-                window.location.href = `login.html?redirect=job.html?id=${jobId}`;
-                return;
-            }
-
-            try {
-                const result = await api.applyJob(jobId);
-                if (result.external_link) {
-                    window.open(result.external_link, '_blank');
-                    showMessage('Redirecting to official government portal...');
-                } else {
-                    showMessage('Application submitted successfully!');
-                }
-            } catch (error) {
-                showMessage('Failed to submit application: ' + error.message);
-            }
-        }
-
-        async function toggleSave(jobId) {
-            if (!auth.isAuthenticated) {
-                window.location.href = `login.html?redirect=job.html?id=${jobId}`;
-                return;
-            }
-
-            const button = document.getElementById('saveButton');
-            const isSaved = button.classList.contains('saved');
-
-            try {
-                if (isSaved) {
-                    await api.unsaveJob(jobId);
-                    button.classList.remove('saved');
-                    showMessage('Job removed from saved items');
-                } else {
-                    await api.saveJob(jobId);
-                    button.classList.add('saved');
-                    showMessage('Job saved successfully!');
-                }
-            } catch (error) {
-                showMessage('Failed to save job: ' + error.message);
-            }
-        }
-
-        function showJobError(message) {
-            document.getElementById('jobContent').innerHTML = `
-                <div class="error">
-                    <p>${escapeHtml(message)}</p>
-                </div>
-                <a href="index.html" class="action-button button-secondary" style="display: inline-flex; text-decoration: none; margin-top: 1rem;">
-                    Return to Home
-                </a>
-            `;
+            return '';
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
         function formatDate(dateString) {
-            if (!dateString) return '';
+            if (!dateString) return 'N/A';
             const date = new Date(dateString);
             return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
         }
 
-        function formatMarkdown(text) {
-            // Simple markdown to HTML conversion
-            return text
-                .replace(/^# (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^## (.*$)/gim, '<h3>$1</h3>')
-                .replace(/^\* (.*$)/gim, '<li>$1</li>')
-                .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>');
-        }
-
-        function showMessage(message) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #004a99;
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 0.5rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                z-index: 9999;
+        function showJobError(message) {
+            document.getElementById('jobContent').innerHTML = `
+                <div class="detail-card">
+                    <div style="padding: 2rem; text-align: center;">
+                        <p style="font-size: 1.125rem; color: var(--danger-color);">❌ ${message}</p>
+                        <a href="index.html" class="important-link-btn" style="margin-top: 1rem;">← Go Back to Home</a>
+                    </div>
+                </div>
             `;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.animation = 'fadeOut 0.3s ease-out';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
         }
     </script>
 </body>
