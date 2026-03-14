@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Job Details - Government Job Hai</title>
+    <meta name="description" content="Government Job Hai provides latest updates on government jobs, admit cards, results, and admission notifications in India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .job-details {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        .job-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .job-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem;
+        }
+        .job-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .job-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-red {
+            background: #fecaca;
+            color: #991b1b;
+        }
+        .badge-green {
+            background: #bbf7d0;
+            color: #166534;
+        }
+        .job-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .job-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .job-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .job-info-item svg {
+            width: 1rem;
+            height: 1rem;
+            color: var(--primary-color);
+        }
+        .job-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .job-links {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+        .job-links button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+        }
+        .job-links button:hover {
+            color: var(--primary-color);
+        }
+        .save-button {
+            padding: 0.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .save-button.saved {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
+        }
+        .save-button:hover {
+            color: #dc2626;
+            border-color: #fecaca;
+        }
+        .job-content {
+            padding: 2rem;
+        }
+        .job-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+        .job-description h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.75rem;
+        }
+        .job-description p {
+            margin-bottom: 1rem;
+        }
+        .job-description ul, .job-description ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .job-description li {
+            margin-bottom: 0.5rem;
+        }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .action-button {
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+        }
+        .button-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        .button-primary:hover {
+            background: var(--primary-dark);
+        }
+        .button-success {
+            background: var(--success-color);
+            color: white;
+        }
+        .button-success:hover {
+            background: #16a34a;
+        }
+        .button-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .button-secondary:hover {
+            background: var(--border-color);
+        }
+        .important-note {
+            background: #fef9c3;
+            border: 1px solid #fde047;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .important-note h3 {
+            color: #854d0e;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .important-note p {
+            color: #a16207;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        .error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Government Job Hai</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="login.html" class="nav-link" id="loginLink">Login</a>
+                <a href="profile.html" class="nav-link hidden" id="profileLink">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="job-details">
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Home
+        </a>
+
+        <div id="jobContent">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading job details...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Government Job Hai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Get job ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('id');
+
+            if (!jobId) {
+                showJobError('Job ID not found');
+                return;
+            }
+
+            try {
+                // Fetch job details
+                const job = await api.getJob(jobId);
+                renderJobDetails(job);
+            } catch (error) {
+                console.error('Failed to load job:', error);
+                showJobError('Failed to load job details. Please try again.');
+            }
+        });
+
+        function renderJobDetails(job) {
+            const container = document.getElementById('jobContent');
+            document.getElementById('pageTitle').textContent = job.title + ' - Government Job Hai';
+
+            const categoryLabels = {
+                'latest_job': 'Latest Job',
+                'admit_card': 'Admit Card',
+                'result': 'Result',
+                'answer_key': 'Answer Key',
+                'syllabus': 'Syllabus',
+                'admission': 'Admission'
+            };
+
+            const hasExternalLink = job.external_link;
+
+            container.innerHTML = `
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-badges">
+                            <span class="job-badge badge-blue">${categoryLabels[job.category] || 'Job'}</span>
+                            ${job.last_date ? `<span class="job-badge badge-red">Last Date: ${formatDate(job.last_date)}</span>` : ''}
+                            ${job.is_filled ? `<span class="job-badge" style="background: #e5e7eb; color: #374151;">Position Filled</span>` : ''}
+                            ${hasExternalLink ? `<span class="job-badge badge-green">External Apply</span>` : ''}
+                        </div>
+                        <h1 class="job-title">${escapeHtml(job.title)}</h1>
+
+                        <div class="job-info-grid">
+                            ${job.location ? `
+                                <div class="job-info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    ${escapeHtml(job.location)}
+                                </div>
+                            ` : ''}
+                            ${job.job_type ? `
+                                <div class="job-info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                    </svg>
+                                    ${escapeHtml(job.job_type)}
+                                </div>
+                            ` : ''}
+                            ${job.qualification ? `
+                                <div class="job-info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    </svg>
+                                    ${escapeHtml(job.qualification)}
+                                </div>
+                            ` : ''}
+                            <div class="job-info-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                ${formatDate(job.created_at)}
+                            </div>
+                        </div>
+
+                        <div class="job-actions">
+                            <div class="job-links">
+                                <button onclick="window.print()">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                        <rect x="6" y="14" width="12" height="8"></rect>
+                                    </svg>
+                                    Print
+                                </button>
+                            </div>
+                            <button class="save-button" id="saveButton" onclick="toggleSave(${job.id})">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="job-content">
+                        <div class="job-description">
+                            ${formatMarkdown(job.content || job.short_info || 'No detailed information available.')}
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="action-button button-primary" onclick="applyToJob(${job.id}, '${hasExternalLink ? escapeHtml(job.external_link) : ''}')">
+                                ${hasExternalLink ? `
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Apply on Official Portal
+                                ` : 'Apply Online Now'}
+                            </button>
+                            ${hasExternalLink ? `
+                                <button class="action-button button-success" onclick="window.open('${escapeHtml(job.external_link)}', '_blank')">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    Visit Official Website
+                                </button>
+                            ` : ''}
+                            <button class="action-button button-secondary">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Download Notification
+                            </button>
+                        </div>
+
+                        <div class="important-note">
+                            <h3>Important Note:</h3>
+                            <p>${hasExternalLink
+                                ? 'This job will redirect you to the official government portal. Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.'
+                                : 'Please read the official notification carefully before applying. Ensure you meet all eligibility criteria including age limit, educational qualification, and category-specific requirements.'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function applyToJob(jobId, externalLink) {
+            // If there's an external link, redirect directly
+            if (externalLink) {
+                window.open(externalLink, '_blank');
+                showMessage('Redirecting to official government portal...');
+                return;
+            }
+
+            // Otherwise, check authentication and record application
+            if (!auth.isAuthenticated) {
+                window.location.href = `login.html?redirect=job.html?id=${jobId}`;
+                return;
+            }
+
+            try {
+                const result = await api.applyJob(jobId);
+                if (result.external_link) {
+                    window.open(result.external_link, '_blank');
+                    showMessage('Redirecting to official government portal...');
+                } else {
+                    showMessage('Application submitted successfully!');
+                }
+            } catch (error) {
+                showMessage('Failed to submit application: ' + error.message);
+            }
+        }
+
+        async function toggleSave(jobId) {
+            if (!auth.isAuthenticated) {
+                window.location.href = `login.html?redirect=job.html?id=${jobId}`;
+                return;
+            }
+
+            const button = document.getElementById('saveButton');
+            const isSaved = button.classList.contains('saved');
+
+            try {
+                if (isSaved) {
+                    await api.unsaveJob(jobId);
+                    button.classList.remove('saved');
+                    showMessage('Job removed from saved items');
+                } else {
+                    await api.saveJob(jobId);
+                    button.classList.add('saved');
+                    showMessage('Job saved successfully!');
+                }
+            } catch (error) {
+                showMessage('Failed to save job: ' + error.message);
+            }
+        }
+
+        function showJobError(message) {
+            document.getElementById('jobContent').innerHTML = `
+                <div class="error">
+                    <p>${escapeHtml(message)}</p>
+                </div>
+                <a href="index.html" class="action-button button-secondary" style="display: inline-flex; text-decoration: none; margin-top: 1rem;">
+                    Return to Home
+                </a>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function formatMarkdown(text) {
+            // Simple markdown to HTML conversion
+            return text
+                .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^\* (.*$)/gim, '<li>$1</li>')
+                .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function showMessage(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #004a99;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 9999;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

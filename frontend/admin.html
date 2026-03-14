@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Government Job Hai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .admin-dashboard {
+            padding: 2rem 0;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logout-button {
+            padding: 0.5rem 1rem;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .logout-button:hover {
+            background: #dc2626;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        .jobs-management {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .add-button {
+            padding: 0.625rem 1.25rem;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        .add-button:hover {
+            background: #16a34a;
+        }
+
+        .jobs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .jobs-table th,
+        .jobs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .jobs-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        .jobs-table tr:hover {
+            background: var(--bg-secondary);
+        }
+        .jobs-table td {
+            font-size: 0.875rem;
+        }
+        .job-title-cell {
+            max-width: 300px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-result { background: #fecaca; color: #991b1b; }
+        .badge-admit_card { background: #dbeafe; color: #1e40af; }
+        .badge-latest_job { background: #bbf7d0; color: #166534; }
+        .badge-answer_key { background: #fef3c7; color: #92400e; }
+        .badge-syllabus { background: #e9d5ff; color: #6b21a8; }
+        .badge-admission { background: #fed7aa; color: #9a3412; }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .action-button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .action-button:hover {
+            background: var(--bg-secondary);
+        }
+        .edit-button {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .edit-button:hover {
+            background: #dbeafe;
+        }
+        .delete-button {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        .delete-button:hover {
+            background: #fef2f2;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .form-full {
+            grid-column: 1 / -1;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-help {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        .modal-button {
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.875rem;
+            border: none;
+        }
+        .button-cancel {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .button-save {
+            background: var(--primary-color);
+            color: white;
+        }
+        .button-save:hover {
+            background: var(--primary-dark);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .jobs-table {
+                font-size: 0.75rem;
+            }
+            .jobs-table th,
+            .jobs-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Government Job Hai</h1>
+                <span class="nav-tagline">Admin Dashboard</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="profile.html" class="nav-link" id="profileLink">Profile</a>
+                <button class="nav-link" id="logoutButton" style="background: none; border: none; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <div class="user-info">
+                    <span id="userName">Welcome</span>
+                    <button class="logout-button" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Jobs</div>
+                    <div class="stat-value" id="totalJobs">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value" id="totalUsers">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Applications</div>
+                    <div class="stat-value" id="totalApps">-</div>
+                </div>
+            </div>
+
+            <!-- Jobs Management -->
+            <div class="jobs-management">
+                <div class="section-header">
+                    <h2 class="section-title">Manage Jobs</h2>
+                    <button class="add-button" onclick="openAddModal()">+ Add New Job</button>
+                </div>
+                <div id="jobsTableContainer">
+                    <div class="loading">Loading jobs...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Job Modal -->
+    <div class="modal" id="jobModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add New Job</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="jobForm">
+                <div class="modal-body">
+                    <input type="hidden" id="jobId">
+                    <div class="form-grid">
+                        <div class="form-group form-full">
+                            <label for="title">Job Title *</label>
+                            <input type="text" id="title" name="title" required placeholder="e.g., SSC CGL 2024 Online Form">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category *</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="latest_job">Latest Job</option>
+                                <option value="admit_card">Admit Card</option>
+                                <option value="result">Result</option>
+                                <option value="answer_key">Answer Key</option>
+                                <option value="syllabus">Syllabus</option>
+                                <option value="admission">Admission</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="job_type">Job Type</label>
+                            <select id="job_type" name="job_type">
+                                <option value="">Select Type</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="post_date">Post Date</label>
+                            <input type="date" id="post_date" name="post_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_date">Last Date</label>
+                            <input type="date" id="last_date" name="last_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="e.g., All India, Delhi">
+                        </div>
+                        <div class="form-group">
+                            <label for="qualification">Qualification</label>
+                            <input type="text" id="qualification" name="qualification" placeholder="e.g., Graduate, 10th Pass">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience_level">Experience Level</label>
+                            <select id="experience_level" name="experience_level">
+                                <option value="">Select Level</option>
+                                <option value="Entry">Entry Level</option>
+                                <option value="Mid">Mid Level</option>
+                                <option value="Senior">Senior Level</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="industry">Industry</label>
+                            <input type="text" id="industry" name="industry" placeholder="e.g., Government, Railway">
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="external_link">External Apply Link (Government Portal)</label>
+                            <input type="url" id="external_link" name="external_link" placeholder="e.g., https://ssc.nic.in">
+                            <div class="form-help">Users will be redirected to this official government portal when they click "Apply Now"</div>
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="short_info">Short Info</label>
+                            <input type="text" id="short_info" name="short_info" placeholder="Brief description for listing view">
+                        </div>
+                        <div class="form-group form-full">
+                            <label for="content">Full Content (Markdown supported)</label>
+                            <textarea id="content" name="content" placeholder="# Detailed job description&#10;&#10;- Eligibility&#10;- How to Apply&#10;- Important Dates"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-button button-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="modal-button button-save">Save Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        let jobs = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if user is admin
+            if (!auth.requireAdmin()) {
+                return;
+            }
+
+            // Update UI with user info
+            if (auth.user) {
+                document.getElementById('userName').textContent = auth.user.name;
+            }
+
+            // Load dashboard data
+            await loadStats();
+            await loadJobs();
+        });
+
+        async function loadStats() {
+            try {
+                const stats = await api.getAnalytics();
+                document.getElementById('totalJobs').textContent = stats.totalJobs || 0;
+                document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                document.getElementById('totalApps').textContent = stats.totalApps || 0;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        async function loadJobs() {
+            const container = document.getElementById('jobsTableContainer');
+            try {
+                jobs = await api.getJobs();
+                renderJobsTable(jobs);
+            } catch (error) {
+                container.innerHTML = '<div class="empty-state">Failed to load jobs. Please try again.</div>';
+            }
+        }
+
+        function renderJobsTable(jobs) {
+            const container = document.getElementById('jobsTableContainer');
+
+            if (jobs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No jobs found. Click "Add New Job" to create one.</div>';
+                return;
+            }
+
+            const categoryLabels = {
+                'latest_job': 'Latest Job',
+                'admit_card': 'Admit Card',
+                'result': 'Result',
+                'answer_key': 'Answer Key',
+                'syllabus': 'Syllabus',
+                'admission': 'Admission'
+            };
+
+            container.innerHTML = `
+                <table class="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Last Date</th>
+                            <th>Location</th>
+                            <th>External Link</th>
+                            <th>Views</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${jobs.map(job => `
+                            <tr>
+                                <td class="job-title-cell">${escapeHtml(job.title)}</td>
+                                <td><span class="badge badge-${job.category}">${categoryLabels[job.category]}</span></td>
+                                <td>${job.last_date ? formatDate(job.last_date) : '-'}</td>
+                                <td>${job.location || '-'}</td>
+                                <td>${job.external_link ? '<a href="' + escapeHtml(job.external_link) + '" target="_blank">✓</a>' : '-'}</td>
+                                <td>${job.views || 0}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-button edit-button" onclick="editJob(${job.id})">Edit</button>
+                                        <button class="action-button delete-button" onclick="deleteJob(${job.id})">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Job';
+            document.getElementById('jobForm').reset();
+            document.getElementById('jobId').value = '';
+            document.getElementById('jobModal').classList.add('active');
+        }
+
+        function editJob(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+
+            document.getElementById('modalTitle').textContent = 'Edit Job';
+            document.getElementById('jobId').value = job.id;
+            document.getElementById('title').value = job.title || '';
+            document.getElementById('category').value = job.category || '';
+            document.getElementById('job_type').value = job.job_type || '';
+            document.getElementById('post_date').value = job.post_date || '';
+            document.getElementById('last_date').value = job.last_date || '';
+            document.getElementById('location').value = job.location || '';
+            document.getElementById('qualification').value = job.qualification || '';
+            document.getElementById('experience_level').value = job.experience_level || '';
+            document.getElementById('industry').value = job.industry || '';
+            document.getElementById('external_link').value = job.external_link || '';
+            document.getElementById('short_info').value = job.short_info || '';
+            document.getElementById('content').value = job.content || '';
+
+            document.getElementById('jobModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('jobModal').classList.remove('active');
+        }
+
+        document.getElementById('jobForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const jobId = document.getElementById('jobId').value;
+            const formData = {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                job_type: document.getElementById('job_type').value,
+                post_date: document.getElementById('post_date').value,
+                last_date: document.getElementById('last_date').value,
+                location: document.getElementById('location').value,
+                qualification: document.getElementById('qualification').value,
+                experience_level: document.getElementById('experience_level').value,
+                industry: document.getElementById('industry').value,
+                external_link: document.getElementById('external_link').value,
+                short_info: document.getElementById('short_info').value,
+                content: document.getElementById('content').value,
+                is_filled: false
+            };
+
+            try {
+                if (jobId) {
+                    await api.updateJob(jobId, formData);
+                    showMessage('Job updated successfully!');
+                } else {
+                    await api.createJob(formData);
+                    showMessage('Job created successfully!');
+                }
+                closeModal();
+                await loadJobs();
+                await loadStats();
+            } catch (error) {
+                showMessage('Failed to save job: ' + error.message);
+            }
+        });
+
+        async function deleteJob(id) {
+            if (!confirm('Are you sure you want to delete this job?')) {
+                return;
+            }
+
+            try {
+                await api.deleteJob(id);
+                showMessage('Job deleted successfully!');
+                await loadJobs();
+                await loadStats();
+            } catch (error) {
+                showMessage('Failed to delete job: ' + error.message);
+            }
+        }
+
+        async function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                await auth.logout();
+                window.location.href = 'index.html';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function showMessage(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #004a99;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 9999;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
