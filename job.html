@@ -335,9 +335,9 @@
             // Auto-detect status badge
             const statusBadge = detectStatusBadge(job.title);
 
-            // Apply link
-            const applyLink = job.apply_link || job.external_link || job.notification_link;
-            const notificationLink = job.notification_link || job.external_link;
+            // Apply link - improved fallback logic
+            const applyLink = job.apply_link || job.external_link || job.notification_link || job.official_website;
+            const notificationLink = job.notification_link || job.external_link || job.apply_link;
 
             container.innerHTML = `
                 <!-- Header Card -->
@@ -543,6 +543,7 @@
                 <div class="detail-card">
                     <h3 class="section-header section-header-orange">🔗 Some Useful Important Links</h3>
                     <div class="card-content">
+                        ${applyLink || notificationLink || job.official_website ? `
                         <table class="useful-links-table">
                             <tr>
                                 <th style="width: 70%;">Description</th>
@@ -554,19 +555,26 @@
                                     <a href="${escapeHtml(applyLink)}" target="_blank" class="click-here-btn">Click Here</a>
                                 </td>
                             </tr>` : ''}
-                            ${notificationLink ? `<tr>
+                            ${notificationLink && notificationLink !== applyLink ? `<tr>
                                 <td class="link-description">📄 Download Official Notification</td>
                                 <td class="click-here">
                                     <a href="${escapeHtml(notificationLink)}" target="_blank" class="click-here-btn">Click Here</a>
                                 </td>
                             </tr>` : ''}
-                            ${job.official_website ? `<tr>
+                            ${job.official_website && job.official_website !== applyLink ? `<tr>
                                 <td class="link-description">🌐 Visit Official Website</td>
                                 <td class="click-here">
                                     <a href="${escapeHtml(job.official_website)}" target="_blank" class="click-here-btn">Click Here</a>
                                 </td>
                             </tr>` : ''}
                         </table>
+                        ` : `
+                        <div style="text-align: center; padding: 2rem; background: #fff7ed; border: 2px dashed #f59e0b; border-radius: 0.5rem;">
+                            <p style="margin: 0; color: #92400e; font-size: 1rem;">
+                                <strong>📋 Important:</strong> Application links will be updated soon. Please check the official website for more details.
+                            </p>
+                        </div>
+                        `}
                     </div>
                 </div>
 
