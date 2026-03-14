@@ -276,16 +276,6 @@
                 display: none;
             }
         }
-
-        /* Pulse Animation for Apply Button */
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
-            }
-            50% {
-                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
-            }
-        }
     </style>
 </head>
 <body>
@@ -357,45 +347,6 @@
                         <p>${job.short_info || ''}</p>
                     </div>
                 </div>
-
-                <!-- Prominent Apply Now Section -->
-                ${applyLink ? `
-                <div class="detail-card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid #f59e0b; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
-                    <div style="padding: 2rem; text-align: center;">
-                        <h2 style="margin: 0 0 1rem 0; font-size: 1.75rem; font-weight: 800; color: #92400e;">
-                            🚀 Apply Now for this Job
-                        </h2>
-                        <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                            ${job.vacancy_count ? `
-                            <div style="text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 700; color: #16a34a;">${job.vacancy_count}</div>
-                                <div style="font-size: 0.875rem; color: #92400e; font-weight: 600;">Vacancies</div>
-                            </div>
-                            ` : ''}
-                            ${job.fee_general ? `
-                            <div style="text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 700; color: #dc2626;">${escapeHtml(job.fee_general)}</div>
-                                <div style="font-size: 0.875rem; color: #92400e; font-weight: 600;">Application Fee<br>(General/OBC)</div>
-                            </div>
-                            ` : ''}
-                            ${job.fee_sc_st ? `
-                            <div style="text-align: center;">
-                                <div style="font-size: 2.5rem; font-weight: 700; color: #16a34a;">${escapeHtml(job.fee_sc_st)}</div>
-                                <div style="font-size: 0.875rem; color: #92400e; font-weight: 600;">Application Fee<br>(SC/ST/PWD)</div>
-                            </div>
-                            ` : ''}
-                        </div>
-                        <a href="${escapeHtml(applyLink)}" target="_blank" style="display: inline-block; background: #dc2626; color: white; padding: 1rem 3rem; border-radius: 0.5rem; text-decoration: none; font-weight: 700; font-size: 1.25rem; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3); transition: all 0.3s; animation: pulse 2s infinite;" onmouseover="this.style.background='#b91c1c'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='#dc2626'; this.style.transform='scale(1)';">
-                            📝 APPLY ONLINE NOW
-                        </a>
-                        ${notificationLink ? `
-                        <div style="margin-top: 1rem;">
-                            <a href="${escapeHtml(notificationLink)}" target="_blank" style="color: #1e40af; text-decoration: underline; font-weight: 600;">📄 Download Official Notification</a>
-                        </div>
-                        ` : ''}
-                    </div>
-                </div>
-                ` : ''}
 
                 <!-- 1. TABULAR DATA SECTIONS (Information Table) -->
                 <div class="detail-card">
